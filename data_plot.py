@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
-FILE ='DATA/data.csv'
+FILE ='./data_weather/visualcrossing.csv'
 
 def modify_loc(location:str)->str:
     '''

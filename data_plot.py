@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -23,44 +24,66 @@ with open(FILE, encoding='utf-8') as reader:
 
 data['name'] = data['name'].apply(modify_loc)
 
-# data = data.tail(72)
+data = data.head(72)
 
 
 sns.set_style("whitegrid")
-## Ver 1.0
 
-# fig, ax = plt.subplots(figsize=(10, 5), layout='constrained')
-# data['windspeed'].plot(ax=ax, style='_', label='Windspeed', color='red', lw=40)
-# data['windgust'].plot(ax=ax, style='_', label='Windgust', color='darkblue')
-# ax.set_xlabel('Date')
-# ax.set_ylabel('Windspeed')
-
-
-# ax2 = ax.twinx()
-# ax2.set_ylabel('Temperature °C')
-# ax2.set_ylabel('Temperature')
-# data['temp'].plot(ax=ax2, style='-', label= 'Temperature', color='green')
-# # ax2.legend()
-# fig.legend(loc='upper left', bbox_to_anchor=(0,1), bbox_transform=ax.transAxes)
-
-## Ver 2.0
 
 fig, ax = plt.subplots(2, 1, figsize=(15,6), layout='constrained' )
 
-ax[0].bar(data.index, data['windspeed'],width=0.1, color='darkblue')
-ax[0].scatter(data.index, data['windgust'], c='steelblue', marker='_',s=10, label='Porywy wiatru')
+ax[0].bar(data.index, data['windspeed'],width=0.05, color='darkblue', label='Prędkosć wiatru')
+ax[0].scatter(data.index, data['windgust'], c='steelblue', marker='_',s=100, label='Porywy wiatru')
 
 ax[0].set_title('Prędkość i porywy wiatru')
-ax[0].set_xlabel('Data')
+ax[0].set_xlabel('Dzień')
 ax[0].set_ylabel('Prędkość wiatru (m/s)')
 
+#setting axis labels
+ax[0].xaxis.set_major_formatter(mdates.DateFormatter('%d-%m %H:%M'))
+ax[0].xaxis.set_major_locator(mdates.HourLocator(interval=6))  
+ax[0].xaxis.set_minor_locator(mdates.HourLocator())  
+plt.setp(ax[0].xaxis.get_majorticklabels(), rotation=45, ha='right')
+
+#grid
+ax[0].grid(which='major', linestyle='-', linewidth='0.5', color='gray')
+ax[0].grid(which='minor', linestyle=':', linewidth='0.5', color='gray')
 
 
-ax[1].plot(data.index, data['temp'], color='red')
-ax[1].scatter(data.index, data['feelslike'], color='orange')
+ax[0].legend()
+
+
+
+ax[1].plot(data.index, data['temp'], color='red', label="Temperatura")
+ax[1].scatter(data.index, data['feelslike'], color='orange', label='Temperatura odczuwalna')
 ax[1].set_title('Temperatura')
-ax[1].set_xlabel('Data')
+ax[1].set_xlabel('Dzień')
 ax[1].set_ylabel('Temperatura (°C)')
+
+#setting axis labels
+ax[1].xaxis.set_major_formatter(mdates.DateFormatter('%d-%m %H:%M'))
+ax[1].xaxis.set_major_locator(mdates.HourLocator(interval=6))  
+ax[1].xaxis.set_minor_locator(mdates.HourLocator())  
+plt.setp(ax[1].xaxis.get_majorticklabels(), rotation=45, ha='right')
+
+#grid
+ax[1].grid(which='major', linestyle='-', linewidth='0.5', color='gray')
+ax[1].grid(which='minor', linestyle=':', linewidth='0.5', color='gray')
+
+ax[1].legend()
+
+# night hours
+for i in range(len(data.index) - 1):
+    current_time = data.index[i]
+    next_time = data.index[i + 1]
+    
+   
+    if (current_time.hour >= 22 or current_time.hour < 6):
+        ax[0].axvspan(current_time, next_time, facecolor='blue', alpha=0.2)
+        ax[1].axvspan(current_time, next_time, facecolor='blue', alpha=0.2)
+
+
+
 
 
 plt.show()

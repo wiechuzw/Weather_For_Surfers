@@ -3,6 +3,7 @@ import matplotlib.dates as mdates
 import pandas as pd
 import numpy as np
 import seaborn as sns
+import subprocess
 
 FILE ='./data_weather/visualcrossing.csv'
 
@@ -85,5 +86,8 @@ for i in range(len(data.index) - 1):
 
 
 
-
+plt.savefig('weather_plot.png')
 plt.show()
+
+
+subprocess.run(["python", "send_email.py"])

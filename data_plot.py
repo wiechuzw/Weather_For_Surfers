@@ -1,8 +1,12 @@
+from typing import Any
+
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-import pandas as pd
+from matplotlib.lines import Line2D
 import numpy as np
 import seaborn as sns
+import pandas as pd
+
 
 FILE ='./data_weather/visualcrossing.csv'
 
@@ -12,8 +16,20 @@ def modify_loc(location:str)->str:
     '''
     return location.split(',')[0]
 
+def night_hours(data: pd.DataFrame, ax1: Any, ax2: Any) -> None:
+    for i in range(len(data.index) - 1):
+        current_time = data.index[i]
+        next_time = data.index[i + 1]
+    
+   
+        if (current_time.hour >= 22 or current_time.hour < 6):
+            ax1.axvspan(current_time, next_time, facecolor='blue', alpha=0.2)
+            ax2.axvspan(current_time, next_time, facecolor='blue', alpha=0.2)
 
-columns = ['name', 'datetime', 'temp', 'feelslike', 'precip', 'winddir','windspeed', 'windgust', 'sealevelpressure' ]
+
+
+columns = ['name', 'datetime', 'temp', 'feelslike', 'winddir','windspeed', 
+           'windgust', 'sealevelpressure', 'cloudcover' ]
 with open(FILE, encoding='utf-8') as reader:
     data = pd.read_csv(reader, 
                        usecols=columns,
@@ -24,24 +40,34 @@ with open(FILE, encoding='utf-8') as reader:
 
 data['name'] = data['name'].apply(modify_loc)
 
-data = data.head(72)
-
+data = data.iloc[:54]
 
 sns.set_style("whitegrid")
 
 
 fig, ax = plt.subplots(2, 1, figsize=(15,6), layout='constrained' )
 
-ax[0].bar(data.index, data['windspeed'],width=0.05, color='darkblue', label='Prędkosć wiatru')
-ax[0].scatter(data.index, data['windgust'], c='steelblue', marker='_',s=100, label='Porywy wiatru')
+# TOP Graph
 
-ax[0].set_title('Prędkość i porywy wiatru')
-ax[0].set_xlabel('Dzień')
-ax[0].set_ylabel('Prędkość wiatru (m/s)')
+#wind and wind gusts
+ax_left_up = ax[0]
+ax_left_up.bar(data.index, data['windspeed'],width=0.04, color='darkblue', label='Prędkosć wiatru')
+ax_left_up.scatter(data.index, data['windgust'], c='steelblue', marker='_',s=100, label='Porywy wiatru')
 
-#setting axis labels
+ax_left_up.set_title('Prognoza na następne 48h')
+ax_left_up.set_xlabel('Dzień')
+ax_left_up.set_ylabel('Prędkość wiatru (m/s)')
+
+#set temp readout on one graph
+ax_right_up = ax_left_up.twinx()
+ax_right_up.plot(data.index, data['temp'], color='darkred', label="Temperatura")
+ax_right_up.plot(data.index, data['feelslike'], color='pink', label='Temperatura odczuwalna')
+ax_right_up.set_ylabel('Temperatura (°C)', color='red')
+ax_right_up.tick_params(axis='y', labelcolor='red')
+
+#setting X axis labels
 ax[0].xaxis.set_major_formatter(mdates.DateFormatter('%d-%m %H:%M'))
-ax[0].xaxis.set_major_locator(mdates.HourLocator(interval=6))  
+ax[0].xaxis.set_major_locator(mdates.HourLocator(interval=3))  
 ax[0].xaxis.set_minor_locator(mdates.HourLocator())  
 plt.setp(ax[0].xaxis.get_majorticklabels(), rotation=45, ha='right')
 
@@ -49,41 +75,65 @@ plt.setp(ax[0].xaxis.get_majorticklabels(), rotation=45, ha='right')
 ax[0].grid(which='major', linestyle='-', linewidth='0.5', color='gray')
 ax[0].grid(which='minor', linestyle=':', linewidth='0.5', color='gray')
 
+# Filling color between 'temp' and 'feelslike'
+ax_right_up.fill_between(data.index, data['temp'], data['feelslike'], 
+                      where=(data['temp'] != data['feelslike']),
+                      color='lightsalmon', alpha=0.5)
+                  
 
-ax[0].legend()
+
+# Arrows pointing wind direction
+arrow_label = 'Kierunek wiatru'
+arrow_length = 1.5  
+arrow_y = data['windspeed'].median() + 10
+for i in range(len(data)):
+    wind_dir_rad = np.deg2rad(data['winddir'].iloc[i]) 
+    x = data.index[i]
+    dx = arrow_length * np.cos(wind_dir_rad)  
+    dy = - arrow_length * np.sin(wind_dir_rad)  
+    ax_right_up.annotate('', xy=(x + pd.Timedelta(hours=0.1), arrow_y + dy), xytext=(x, arrow_y),
+                      arrowprops=dict(arrowstyle='->', color='red', lw=1.5))
+    
 
 
+# Bottom Graph
 
-ax[1].plot(data.index, data['temp'], color='red', label="Temperatura")
-ax[1].scatter(data.index, data['feelslike'], color='orange', label='Temperatura odczuwalna')
-ax[1].set_title('Temperatura')
-ax[1].set_xlabel('Dzień')
-ax[1].set_ylabel('Temperatura (°C)')
+ax_left_dwn = ax[1]
+ax_left_dwn.bar(data.index, data['cloudcover'], width=0.04,color='steelblue', label="Chmury")
+ax_left_dwn.set_title('Zachmurzenie')
+ax_left_dwn.set_xlabel('Dzień')
+ax_left_dwn.set_ylabel('pokrywa chmur (%)')
+
+ax_right_dwn = ax_left_dwn.twinx()
+ax_right_dwn.plot(data.index, data['sealevelpressure'], color='orange', label='Ciśnienie')
+ax_right_dwn.set_ylabel('Ciśnienie (hPa)', color='orange')
+ax_right_dwn.tick_params(axis='y', labelcolor='orange')
 
 #setting axis labels
-ax[1].xaxis.set_major_formatter(mdates.DateFormatter('%d-%m %H:%M'))
-ax[1].xaxis.set_major_locator(mdates.HourLocator(interval=6))  
-ax[1].xaxis.set_minor_locator(mdates.HourLocator())  
-plt.setp(ax[1].xaxis.get_majorticklabels(), rotation=45, ha='right')
+ax_left_dwn.xaxis.set_major_formatter(mdates.DateFormatter('%d-%m %H:%M'))
+ax_left_dwn.xaxis.set_major_locator(mdates.HourLocator(interval=3))  
+ax_left_dwn.xaxis.set_minor_locator(mdates.HourLocator())  
+plt.setp(ax_left_dwn.xaxis.get_majorticklabels(), rotation=45, ha='right')
 
 #grid
-ax[1].grid(which='major', linestyle='-', linewidth='0.5', color='gray')
-ax[1].grid(which='minor', linestyle=':', linewidth='0.5', color='gray')
-
-ax[1].legend()
-
-# night hours
-for i in range(len(data.index) - 1):
-    current_time = data.index[i]
-    next_time = data.index[i + 1]
-    
-   
-    if (current_time.hour >= 22 or current_time.hour < 6):
-        ax[0].axvspan(current_time, next_time, facecolor='blue', alpha=0.2)
-        ax[1].axvspan(current_time, next_time, facecolor='blue', alpha=0.2)
+ax_left_dwn.grid(which='major', linestyle='-', linewidth='0.5', color='blue')
+ax_right_dwn.grid(which='minor', linestyle=':', linewidth='0.5', color='orange')
 
 
+# Created 'Wind Direction Marker' 
+arrow_legend = Line2D([0], [0], color='red', lw=0.5, marker='>', markersize=5, label='Kierunek wiatru')
+
+#Legends
+ax[0].legend(handles=(ax_left_up.bar(data.index, data['windspeed'],width=0.04, color='darkblue', label='Prędkosć wiatru'),
+            ax_left_up.scatter(data.index, data['windgust'], c='steelblue', marker='_',s=100, label='Porywy wiatru'),
+            arrow_legend),
+            loc='upper left')
+ax_right_up.legend(loc='upper right')
+ax_left_dwn.legend(loc='upper left')
+ax_right_dwn.legend(loc='upper right')
 
 
+night_hours(data, ax[0], ax[1])
 
+# plt.tight_layout()
 plt.show()

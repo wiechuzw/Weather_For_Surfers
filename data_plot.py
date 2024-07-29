@@ -38,7 +38,7 @@ ax[0].scatter(data.index, data['windgust'], c='steelblue', marker='_',s=100, lab
 
 ax[0].set_title('Prędkość i porywy wiatru')
 ax[0].set_xlabel('Dzień')
-ax[0].set_ylabel('Prędkość wiatru (m/s)')
+ax[0].set_ylabel('Prędkość wiatru (km/h)')
 
 #setting axis labels
 ax[0].xaxis.set_major_formatter(mdates.DateFormatter('%d-%m %H:%M'))

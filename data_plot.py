@@ -29,7 +29,7 @@ def night_hours(data: pd.DataFrame, ax1: Any, ax2: Any) -> None:
 
 
 columns = ['name', 'datetime', 'temp', 'feelslike', 'winddir','windspeed', 
-           'windgust', 'sealevelpressure', 'cloudcover' ]
+           'windgust', 'precip', 'snow', 'cloudcover' ]
 with open(FILE, encoding='utf-8') as reader:
     data = pd.read_csv(reader, 
                        usecols=columns,
@@ -51,12 +51,12 @@ fig, ax = plt.subplots(2, 1, figsize=(15,6), layout='constrained' )
 
 #wind and wind gusts
 ax_left_up = ax[0]
-ax_left_up.bar(data.index, data['windspeed'],width=0.04, color='darkblue', label='Prędkosć wiatru')
-ax_left_up.scatter(data.index, data['windgust'], c='steelblue', marker='_',s=100, label='Porywy wiatru')
+wind = ax_left_up.bar(data.index, data['windspeed'],width=0.04, color='lightblue', label='Prędkosć wiatru')
+gust = ax_left_up.scatter(data.index, data['windgust'], c='steelblue', marker='_',s=100, label='Porywy wiatru')
 
-ax_left_up.set_title('Prognoza na następne 48h')
+ax_left_up.set_title(f'Prognoza na następne 48h dla {data['name'].iloc[0]}')
 ax_left_up.set_xlabel('Dzień')
-ax_left_up.set_ylabel('Prędkość wiatru (m/s)')
+ax_left_up.set_ylabel('Prędkość wiatru (km/h)')
 
 #set temp readout on one graph
 ax_right_up = ax_left_up.twinx()
@@ -99,15 +99,19 @@ for i in range(len(data)):
 # Bottom Graph
 
 ax_left_dwn = ax[1]
-ax_left_dwn.bar(data.index, data['cloudcover'], width=0.04,color='steelblue', label="Chmury")
+ax_left_dwn.bar(data.index, data['cloudcover'], width=0.04,color='darkblue', label="Chmury")
 ax_left_dwn.set_title('Zachmurzenie')
 ax_left_dwn.set_xlabel('Dzień')
 ax_left_dwn.set_ylabel('pokrywa chmur (%)')
 
 ax_right_dwn = ax_left_dwn.twinx()
-ax_right_dwn.plot(data.index, data['sealevelpressure'], color='orange', label='Ciśnienie')
-ax_right_dwn.set_ylabel('Ciśnienie (hPa)', color='orange')
-ax_right_dwn.tick_params(axis='y', labelcolor='orange')
+ax_right_dwn.bar(data.index, data['precip'], color='orange', label='Opady deszczu')
+ax_right_dwn.bar(data.index, data['snow'], color= 'lightblue', label = 'Opady śniegu' )
+
+ax_right_dwn.set_ylabel('Opady (mm)', color='gray')
+ax_right_dwn.set_ylim(bottom=0)
+ax_right_dwn.tick_params(axis='y', labelcolor='black')
+
 
 #setting axis labels
 ax_left_dwn.xaxis.set_major_formatter(mdates.DateFormatter('%d-%m %H:%M'))
@@ -124,10 +128,7 @@ ax_right_dwn.grid(which='minor', linestyle=':', linewidth='0.5', color='orange')
 arrow_legend = Line2D([0], [0], color='red', lw=0.5, marker='>', markersize=5, label='Kierunek wiatru')
 
 #Legends
-ax[0].legend(handles=(ax_left_up.bar(data.index, data['windspeed'],width=0.04, color='darkblue', label='Prędkosć wiatru'),
-            ax_left_up.scatter(data.index, data['windgust'], c='steelblue', marker='_',s=100, label='Porywy wiatru'),
-            arrow_legend),
-            loc='upper left')
+ax[0].legend(handles= (wind, gust,arrow_legend), loc='upper left')
 ax_right_up.legend(loc='upper right')
 ax_left_dwn.legend(loc='upper left')
 ax_right_dwn.legend(loc='upper right')

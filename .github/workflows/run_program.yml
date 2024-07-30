@@ -24,4 +24,4 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run script
-      run: python sequential_run.py
+      run: python data_loading.py

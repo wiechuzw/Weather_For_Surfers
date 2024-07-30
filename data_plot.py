@@ -10,6 +10,43 @@ import pandas as pd
 
 FILE ='./data_weather/visualcrossing.csv'
 
+### Border condiotions for good windsurfing
+
+windspeed_min = 5
+windspeed_max = 20
+wind_gust = 40
+
+wind_direct_min = 30
+wind_direct_max = 330
+
+temp_min = 5
+precip_max = 3
+
+def condition_checker(data):
+    conditions_counter = []
+
+    # data['precip'] = data['precip'].fillna(0)
+    # data['snow'] = data['snow'].fillna(0)
+    # data['winddir'] = data['winddir'].fillna(0)
+
+    for row in data.itertuples(index=False):
+        counter = 0
+        if windspeed_min <= row.windspeed <= windspeed_max:
+            counter += 1
+        
+        if wind_direct_min <= row.winddir <= wind_direct_max:
+            counter +=1
+
+        if temp_min <= row.temp:
+            counter += 1
+
+        precip = row.precip + row.snow
+        if precip <= precip_max:
+            counter += 1
+
+        conditions_counter.append(counter)
+    return conditions_counter
+
 def modify_loc(location:str)->str:
     '''
     Shortens the name of location to only city name
@@ -52,11 +89,14 @@ def get_data(hours: int)->pd.DataFrame:
 
 def main():
     data = get_data(54)
+    data_360 = get_data(360)
+    data_360['conditions'] = condition_checker(data_360)
+    
 
     sns.set_style("whitegrid")
 
 
-    fig, ax = plt.subplots(2, 1, figsize=(15,6), layout='constrained' )
+    fig, ax = plt.subplots(3, 1, figsize=(15,6), layout='constrained' )
 
     # TOP Graph
 
@@ -94,7 +134,6 @@ def main():
 
 
     # Arrows pointing wind direction
-    arrow_label = 'Kierunek wiatru'
     arrow_length = 1.5  
     arrow_y = data['windspeed'].median() + 10
     for i in range(len(data)):
@@ -107,7 +146,7 @@ def main():
         
 
 
-    # Bottom Graph
+    # Middle Graph
 
     ax_left_dwn = ax[1]
     ax_left_dwn.bar(data.index, data['cloudcover'], width=0.04,color='darkblue', label="Chmury")
@@ -135,6 +174,18 @@ def main():
     ax_right_dwn.grid(which='minor', linestyle=':', linewidth='0.5', color='orange')
 
 
+
+    # Bottom graph
+
+    ax[2].bar(data_360.index, data_360['conditions'], color='lightgreen',width=0.03, label='Warunki do pływania')
+    ax[2].set_title('Warunki sprzyjające pływaniu ( prognoza na 15 dni )')
+
+    ax[2].xaxis.set_major_formatter(mdates.DateFormatter('%d-%m'))
+    ax[2].xaxis.set_major_locator(mdates.HourLocator(interval=24))  
+    ax[2].xaxis.set_minor_locator(mdates.HourLocator())  
+    plt.setp(ax[2].xaxis.get_majorticklabels(), rotation=45, ha='right')
+
+
     # Created 'Wind Direction Marker' 
     arrow_legend = Line2D([0], [0], color='red', lw=0.5, marker='>', markersize=5, label='Kierunek wiatru')
 
@@ -143,12 +194,13 @@ def main():
     ax_right_up.legend(loc='upper right')
     ax_left_dwn.legend(loc='upper left')
     ax_right_dwn.legend(loc='upper right')
+    ax[2].legend(loc='lower center')
 
 
     night_hours(data, ax[0], ax[1])
 
-    # plt.tight_layout()
     plt.show()
 
 if __name__ == '__main__':
     main()
+

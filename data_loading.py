@@ -1,16 +1,14 @@
-"""
-The code retrieves weather data from the Visual Crossing API and saves it to a JSON file.
-The script performs the following steps:
-1. Defines the URL to the Visual Crossing API with request parameters (location, metric units, API key, and response format).
-2. Sets the output directory and filename for saving data.
-3. Sends a request to the API and checks if the response is correct.
-4. Creates the output directory if it does not exist.
-5. Saves the response data in JSON format to a file.
-6. Prints a message about saving the data along with the time of downloading the data.
+""" 
+data_loading.py:
+1- This program takes weather data from "weather.visualcrossing.com" and collect it in "data_weather\visualcrossing.csv"
+2- start next program: data_plot.py
+3- data_plot.py processes the data's weather, performs the weather graph and sends it to send_email 
+4- data_plot.py start send_email
 """
 
 import datetime
 import requests
+import subprocess
 import sys
 import os
 
@@ -31,3 +29,5 @@ with open(OUTPUT_FILENAME, 'w', encoding='utf-8') as file:
     file.write(response.text)
 
 print(f'Data saved in {OUTPUT_FILENAME}; Time of data download -> {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}')
+
+subprocess.run(["python", "data_plot.py"])

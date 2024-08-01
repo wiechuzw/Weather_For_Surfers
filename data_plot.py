@@ -6,6 +6,7 @@ from matplotlib.lines import Line2D
 import numpy as np
 import seaborn as sns
 import pandas as pd
+import subprocess
 
 
 FILE ='./data_weather/visualcrossing.csv'
@@ -93,11 +94,15 @@ def main():
     data_360['conditions'] = condition_checker(data_360)
     
 
-    sns.set_style("whitegrid")
+
+    ax[0].set_title('Prędkość i porywy wiatru')
+    ax[0].set_xlabel('Dzień')
+    ax[0].set_ylabel('Prędkość wiatru (km/h)')
+
 
 
     fig, ax = plt.subplots(3, 1, figsize=(15,6), layout='constrained' )
-
+    sns.set_style("whitegrid")
     # TOP Graph
 
     #wind and wind gusts
@@ -201,6 +206,14 @@ def main():
 
     plt.show()
 
+    plt.savefig('weather_plot.png')
+
+
+    subprocess.run(["python", "send_email.py"])
+    
 if __name__ == '__main__':
     main()
+
+
+
 

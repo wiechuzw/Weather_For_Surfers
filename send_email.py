@@ -18,7 +18,7 @@ def send_email(subject, body, attachment_path):
     '''
     The function creates an email message with a given subject and content, and then sends it from a previously defined sender's address to multiple recipients. The message also includes an attachment with weather information.
     '''
-    receiver_emails = ["wiechuzw@gmail.com"]#, "l.cichowicz@wp.pl", "piotrek21125@wp.pl"]
+    receiver_emails = ["wiechuzw@gmail.com", "l.cichowicz@wp.pl", "piotrek21125@wp.pl"]
     password = email_password
 
     # Create an email message

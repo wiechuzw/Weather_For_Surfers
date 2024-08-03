@@ -26,10 +26,6 @@ precip_max = 3
 def condition_checker(data):
     conditions_counter = []
 
-    # data['precip'] = data['precip'].fillna(0)
-    # data['snow'] = data['snow'].fillna(0)
-    # data['winddir'] = data['winddir'].fillna(0)
-
     for row in data.itertuples(index=False):
         counter = 0
         if windspeed_min <= row.windspeed <= windspeed_max:
@@ -95,14 +91,9 @@ def main():
     
 
 
-    ax[0].set_title('Prędkość i porywy wiatru')
-    ax[0].set_xlabel('Dzień')
-    ax[0].set_ylabel('Prędkość wiatru (km/h)')
-
-
-
     fig, ax = plt.subplots(3, 1, figsize=(15,6), layout='constrained' )
     sns.set_style("whitegrid")
+
     # TOP Graph
 
     #wind and wind gusts
@@ -140,7 +131,7 @@ def main():
 
     # Arrows pointing wind direction
     arrow_length = 1.5  
-    arrow_y = data['windspeed'].median() + 10
+    arrow_y = data['windspeed'].mean() + 15
     for i in range(len(data)):
         wind_dir_rad = np.deg2rad(data['winddir'].iloc[i]) 
         x = data.index[i]
@@ -160,8 +151,8 @@ def main():
     ax_left_dwn.set_ylabel('pokrywa chmur (%)')
 
     ax_right_dwn = ax_left_dwn.twinx()
-    ax_right_dwn.bar(data.index, data['precip'], color='orange', label='Opady deszczu')
-    ax_right_dwn.bar(data.index, data['snow'], color= 'lightblue', label = 'Opady śniegu' )
+    ax_right_dwn.bar(data.index, data['precip'], width=0.04, color='orange', label='Opady deszczu')
+    ax_right_dwn.bar(data.index, data['snow'], width=0.04, color= 'lightblue', label = 'Opady śniegu' )
 
     ax_right_dwn.set_ylabel('Opady (mm)', color='gray')
     ax_right_dwn.set_ylim(bottom=0)

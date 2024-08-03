@@ -3,7 +3,7 @@ data_loading.py:
 1- This program takes weather data from "weather.visualcrossing.com" and collect it in "data_weather\visualcrossing.csv"
 2- start next program: data_plot.py
 3- data_plot.py processes the data's weather, performs the weather graph and sends it to send_email 
-4- data_plot.py start send_email
+4- data_plot.py start send_email_2
 """
 
 import datetime

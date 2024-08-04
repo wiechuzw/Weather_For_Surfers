@@ -1,0 +1,9 @@
+windspeed_min = 5
+windspeed_max = 20
+wind_gust = 40
+
+wind_direct_min = 30
+wind_direct_max = 330
+
+temp_min = 5
+precip_max = 3

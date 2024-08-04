@@ -131,12 +131,12 @@ def main():
 
     # Arrows pointing wind direction
     arrow_length = 1.5  
-    arrow_y = data['windspeed'].mean() + 15
+    arrow_y = data['windspeed'].mean() +10
     for i in range(len(data)):
         wind_dir_rad = np.deg2rad(data['winddir'].iloc[i]) 
         x = data.index[i]
-        dx = arrow_length * np.cos(wind_dir_rad)  
-        dy = - arrow_length * np.sin(wind_dir_rad)  
+        # dx = arrow_length * np.cos(wind_dir_rad)  
+        dy =  arrow_length * np.sin(wind_dir_rad)  
         ax_right_up.annotate('', xy=(x + pd.Timedelta(hours=0.1), arrow_y + dy), xytext=(x, arrow_y),
                         arrowprops=dict(arrowstyle='->', color='red', lw=1.5))
         
@@ -195,12 +195,15 @@ def main():
 
     night_hours(data, ax[0], ax[1])
 
-    plt.show()
-
-    plt.savefig('weather_plot.png')
 
 
-    subprocess.run(["python", "send_email.py"])
+
+    if __name__ == '__main__':
+        plt.show()
+    else:
+        plt.savefig('weather_plot.png')
+
+
     
 if __name__ == '__main__':
     main()

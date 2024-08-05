@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Dict
 
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -10,35 +10,39 @@ import subprocess
 
 
 FILE ='./data_weather/visualcrossing.csv'
+CONFIG_FILE = 'border_values.txt'
 
-### Border condiotions for good windsurfing
 
-windspeed_min = 5
-windspeed_max = 20
-wind_gust = 40
+def border_values(file:str)->Dict[str,str]:
+    
+    with open(file, 'r', encoding='utf-8') as reader:
+        conditions = {key.strip():  value.strip() for line in reader 
+                      if line.strip() and not line.startswith('#') 
+                        for key, value in [line.split('=',1 )] if len(line.split('=')) == 2}
+        
+        return conditions
 
-wind_direct_min = 30
-wind_direct_max = 330
 
-temp_min = 5
-precip_max = 3
 
-def condition_checker(data):
+
+def condition_checker(data : pd.DataFrame, conditions: Dict[str, str]):
+
+    conditions = {key: float(value) for key, value in conditions.items()}
     conditions_counter = []
 
     for row in data.itertuples(index=False):
         counter = 0
-        if windspeed_min <= row.windspeed <= windspeed_max:
+        if conditions.get('windspeed_min') <= row.windspeed <= conditions.get('windspeed_max'):
             counter += 1
         
-        if wind_direct_min <= row.winddir <= wind_direct_max:
+        if conditions.get('wind_direct_min') <= row.winddir <= conditions.get('wind_direct_max'):
             counter +=1
 
-        if temp_min <= row.temp:
+        if conditions.get('temp_min') <= row.temp:
             counter += 1
 
         precip = row.precip + row.snow
-        if precip <= precip_max:
+        if precip <= conditions.get('precip_max'):
             counter += 1
 
         conditions_counter.append(counter)
@@ -87,7 +91,8 @@ def get_data(hours: int)->pd.DataFrame:
 def main():
     data = get_data(54)
     data_360 = get_data(360)
-    data_360['conditions'] = condition_checker(data_360)
+    conditions = border_values(CONFIG_FILE)
+    data_360['conditions'] = condition_checker(data_360, conditions)
     
 
 
@@ -131,12 +136,12 @@ def main():
 
     # Arrows pointing wind direction
     arrow_length = 1.5  
-    arrow_y = data['windspeed'].mean() + 15
+    arrow_y = data['windspeed'].mean() +10
     for i in range(len(data)):
         wind_dir_rad = np.deg2rad(data['winddir'].iloc[i]) 
         x = data.index[i]
-        dx = arrow_length * np.cos(wind_dir_rad)  
-        dy = - arrow_length * np.sin(wind_dir_rad)  
+        # dx = arrow_length * np.cos(wind_dir_rad)  
+        dy =  arrow_length * np.sin(wind_dir_rad)  
         ax_right_up.annotate('', xy=(x + pd.Timedelta(hours=0.1), arrow_y + dy), xytext=(x, arrow_y),
                         arrowprops=dict(arrowstyle='->', color='red', lw=1.5))
         
@@ -195,12 +200,16 @@ def main():
 
     night_hours(data, ax[0], ax[1])
 
-    plt.show()
-
-    plt.savefig('weather_plot.png')
 
 
-    subprocess.run(["python", "send_email.py"])
+
+    if __name__ == '__main__':
+        plt.show()
+    else:
+        plt.savefig('weather_plot.png')
+        plt.close()
+
+
     
 if __name__ == '__main__':
     main()

@@ -1,2 +1,7 @@
 # data_weather/visualcrossing.csv
 PYTHON.code-workspace
+.pytest_cache/
+__pycache__
+*.pyc
+*.pyo
+*.png

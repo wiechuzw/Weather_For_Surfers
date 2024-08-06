@@ -4,10 +4,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import os
 
-# Konfiguracja e-maila
 EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
 EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')
-RECIPIENT_EMAIL = 'wiechuzw@gmail.com'
+SUPPORT_ADDRESS = ["wieslaw.ziewiecki@gmail.com", "l.cichowicz@wp.pl", "piotrek21125@wp.pl"]
 
 if EMAIL_PASSWORD is None or EMAIL_ADDRESS is None:
     raise ValueError("Zmienne środowiskowe EMAIL_PASSWORD lub EMAIL_ADDRESS nie zostały ustawione")
@@ -18,7 +17,7 @@ def send_error_email(program_name, error_message):
     
     msg = MIMEMultipart()
     msg['From'] = EMAIL_ADDRESS
-    msg['To'] = RECIPIENT_EMAIL
+    msg['To'] = ", ".join(SUPPORT_ADDRESS)
     msg['Subject'] = subject
     msg.attach(MIMEText(body, 'plain'))
     
@@ -27,7 +26,7 @@ def send_error_email(program_name, error_message):
         server.starttls()
         server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
         text = msg.as_string()
-        server.sendmail(EMAIL_ADDRESS, RECIPIENT_EMAIL, text)
+        server.sendmail(EMAIL_ADDRESS, SUPPORT_ADDRESS, text)
         server.quit()
         print(f"Error email sent for {program_name}")
     except Exception as e:

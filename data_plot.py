@@ -6,7 +6,7 @@ from matplotlib.lines import Line2D
 import numpy as np
 import seaborn as sns
 import pandas as pd
-import subprocess
+
 
 
 FILE ='./data_weather/visualcrossing.csv'

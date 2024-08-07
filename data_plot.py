@@ -203,15 +203,16 @@ def main():
 
 
 
-    if __name__ == '__main__':
-        plt.show()
-    else:
-        plt.savefig('weather_plot.png')
-        plt.close()
-
+    return plt
+    
 
     
 if __name__ == '__main__':
     main()
+    plt.show()
+else:
+    main()
+    plt.savefig('weather_plot.png')
+    plt.close()
 
 

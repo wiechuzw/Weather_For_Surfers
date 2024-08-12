@@ -7,3 +7,13 @@ wind_direct_max = 330
 
 temp_min = 5
 precip_max = 3
+
+latitude=49.9746
+longitude=18.9493
+
+min_windspeed = 10
+max_windspeed = 60
+days_ahead = 2
+min_temp = 5
+snow = 0
+precip = 0

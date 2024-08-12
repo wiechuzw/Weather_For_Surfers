@@ -1,10 +1,14 @@
-import unittest
-from unittest.mock import patch, mock_open, MagicMock
-import data_loading
 import os
 import shutil
 import tempfile
+import unittest
+
+from unittest.mock import patch, mock_open, MagicMock
+
 import requests
+
+import data_loading
+
 
 class TestDataLoading(unittest.TestCase):
 

@@ -1,3 +1,21 @@
+"""
+Tests of the `load_weather_data` function from the `data_loading` module.
+
+The test class contains tests that check the correct operation of the `load_weather_data` function and error handling.
+The tests are run in a temporary test directory.
+
+Test methods:
+
+- `test_happy_path`:
+Tests the correct operation of the `load_weather_data` function under normal conditions.
+Simulates successful data download and writing to a file. Verifies that
+the file was opened in write mode and that the data was saved correctly.
+
+- `test_program_exit_on_error`:
+Tests whether the program exits correctly with error code 1,
+when an error occurs while downloading data. Simulates a `RequestException`
+exception during data download and checks whether the `sys.exit(1)` function was called.
+"""
 import os
 import shutil
 import tempfile

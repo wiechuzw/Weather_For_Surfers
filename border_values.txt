@@ -11,7 +11,7 @@ precip_max = 3
 latitude=49.9746
 longitude=18.9493
 
-min_windspeed = 10
+min_windspeed = 14
 max_windspeed = 60
 days_ahead = 2
 min_temp = 5

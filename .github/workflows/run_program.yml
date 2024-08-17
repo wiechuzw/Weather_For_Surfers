@@ -39,4 +39,4 @@ jobs:
         cat ./data_weather/visualcrossing.csv
 
     - name: Run script
-      run: python master_.py
+      run: python app.py

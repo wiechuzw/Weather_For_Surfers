@@ -13,10 +13,10 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: '3.12'
 
@@ -30,5 +30,13 @@ jobs:
         echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> $GITHUB_ENV
         echo "EMAIL_ADDRESS=${{ secrets.EMAIL_ADDRESS }}" >> $GITHUB_ENV
 
+    - name: Run Data Loading
+      run: python data_loading.py
+
+    - name: Verify Data File
+      run: |
+        ls -l ./data_weather
+        cat ./data_weather/visualcrossing.csv
+
     - name: Run script
-      run: python master_.py
+      run: python app.py

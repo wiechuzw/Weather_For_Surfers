@@ -1,3 +1,6 @@
+receiver_emails = ["wiechuzw@gmail.com", "l.cichowicz@wp.pl", "piotrek21125@wp.pl"]
+support_address = ["wieslaw.ziewiecki@gmail.com", "l.cichowicz@wp.pl", "piotrek21125@wp.pl"]
+
 windspeed_min = 5
 windspeed_max = 20
 wind_gust = 40

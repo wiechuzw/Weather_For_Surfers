@@ -3,11 +3,14 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import os
-import data_plot
+import toml
+
+# Load the configuration from the TOML file
+config = toml.load('Config_file.toml')
 
 EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
 EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')
-SUPPORT_ADDRESS = ["wieslaw.ziewiecki@gmail.com", "l.cichowicz@wp.pl", "piotrek21125@wp.pl"]
+SUPPORT_ADDRESS = config['support_address']
 
 if EMAIL_PASSWORD is None or EMAIL_ADDRESS is None:
     raise ValueError("Zmienne środowiskowe EMAIL_PASSWORD lub EMAIL_ADDRESS nie zostały ustawione")
@@ -45,7 +48,7 @@ def run_program(program_name, script_name):
 
 def main():
     try:
-        run_program("Data Loading", "data_loading.py")
+        # run_program("Data Loading", "data_loading")
         run_program("Data Plotting", "data_plot.py")
         run_program("Send Email", "send_email.py")
     except Exception as e:

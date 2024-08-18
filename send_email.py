@@ -7,7 +7,7 @@ from email.mime.base import MIMEBase
 from email import encoders
 
 # Load the configuration from the TOML file
-config = toml.load('config_file.toml')
+config = toml.load('Config_file.toml')
 
 # Retrieve email addresses from the configuration
 receiver_emails = config['receiver_emails']

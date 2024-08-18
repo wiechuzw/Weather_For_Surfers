@@ -6,7 +6,7 @@ import os
 import toml
 
 # Load the configuration from the TOML file
-config = toml.load('config_file.toml')
+config = toml.load('Config_file.toml')
 
 EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
 EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')

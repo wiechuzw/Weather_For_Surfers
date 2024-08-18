@@ -1,26 +1,21 @@
 import requests
+import toml
 from datetime import datetime, timedelta
-
 
 def read_coordinates(file: str):
     """
-    Reads the latitude and longitude from a configuration file.
+    Reads the latitude and longitude from a configuration file in TOML format.
     """
-    with open(file, 'r', encoding='utf-8') as reader:
-        coordinates = {}
-        for line in reader:
-            if line.strip() and not line.startswith('#'):
-                key, value = line.strip().split('=')
-                coordinates[key.strip()] = float(value.strip())
-    return coordinates['latitude'], coordinates['longitude']
+    config = toml.load(file)
+    return config['latitude'], config['longitude']
 
 
 def get_daylight_hours(file: str, date: str = None):
     """
     This function finds the sunrise and sunset times for any date and rounds them to full hours with half-hour accuracy.
     If the date is not given, the data for the current day is given.
-    This function finds sunrise and sunset time for a specific location according to the configuration file
-    The latitude and longitude (specific location) are loading from a configuration file: border_valuse.py.
+    It finds sunrise and sunset time for a specific location according to the configuration file.
+    The latitude and longitude (specific location) are loaded from a configuration file in TOML format.
     """
     lat, lon = read_coordinates(file)
     
@@ -47,9 +42,9 @@ def get_daylight_hours(file: str, date: str = None):
 
 
 def main():
-    config_file = 'border_values.txt'
+    config_file = 'Config_file.toml'
     sunrise, sunset = get_daylight_hours(config_file)
-    print(f"sunrise: {sunrise}, sunset: {sunset}")
+    print(f"Sunrise: {sunrise}, Sunset: {sunset}")
 
 
 if __name__ == '__main__':

@@ -3,6 +3,7 @@ from typing import Any
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from matplotlib.lines import Line2D
+from sunrise_sunset import get_daylight_hours
 import numpy as np
 import seaborn as sns
 import pandas as pd
@@ -10,6 +11,7 @@ import pandas as pd
 
 
 FILE ='./data_weather/visualcrossing.csv'
+CONFIG_FILE = 'Config_file.toml'
 
 def modify_loc(location:str)->str:
     '''
@@ -19,12 +21,16 @@ def modify_loc(location:str)->str:
 
 def night_hours(data: pd.DataFrame, ax1: Any, ax2: Any) -> None:
     ''' Marks hours between 22 PM and 6 AM as 'night hours'. '''
+    sunrise, sunset = get_daylight_hours(CONFIG_FILE)
+    sunrise = sunrise.split(':')
+    sunset = sunset.split(':')
     for i in range(len(data.index) - 1):
         current_time = data.index[i]
         next_time = data.index[i + 1]
+
     
    
-        if (current_time.hour >= 22 or current_time.hour < 6):
+        if (current_time.hour >= int(sunset[0]) or current_time.hour < int(sunrise[0])):
             ax1.axvspan(current_time, next_time, facecolor='blue', alpha=0.2)
             ax2.axvspan(current_time, next_time, facecolor='blue', alpha=0.2)
 
@@ -46,12 +52,12 @@ def get_data(hours: int)->pd.DataFrame:
 
     data['name'] = data['name'].apply(modify_loc)
 
-    data = data.iloc[:hours]
+    data = data.iloc[12:hours+12]
     return data
 
 
 def main():
-    data = get_data(54)
+    data = get_data(56)
   
 
     fig, ax = plt.subplots(2, 1, figsize=(15,6), layout='constrained' )
@@ -88,7 +94,7 @@ def main():
     # Filling color between 'temp' and 'feelslike'
     ax_right_up.fill_between(data.index, data['temp'], data['feelslike'], 
                         where=(data['temp'] != data['feelslike']),
-                        color='lightblue', alpha=0.5)
+                        color='salmon', alpha=0.2)
                     
 
 
@@ -114,8 +120,8 @@ def main():
     ax_left_dwn.set_ylabel('pokrywa chmur (%)')
 
     ax_right_dwn = ax_left_dwn.twinx()
-    ax_right_dwn.bar(data.index, data['precip'], width=0.04, color='orange', label='Opady deszczu')
-    ax_right_dwn.bar(data.index, data['snow'], width=0.04, color= 'lightblue', label = 'Opady śniegu' )
+    ax_right_dwn.bar(data.index, data['precip'], width=0.02, color='orange', label='Opady deszczu')
+    ax_right_dwn.bar(data.index, data['snow'], width=0.02, color= 'lightblue', label = 'Opady śniegu' )
 
     ax_right_dwn.set_ylabel('Opady (mm)', color='gray')
     ax_right_dwn.set_ylim(bottom=0)
@@ -159,5 +165,3 @@ else:
     main()
     plt.savefig('weather_plot.png')
     plt.close()
-
-

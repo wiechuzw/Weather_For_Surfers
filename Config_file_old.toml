@@ -1,0 +1,22 @@
+receiver_emails = ["wiechuzw@gmail.com", "l.cichowicz@wp.pl", "piotrek21125@wp.pl"]
+support_address = ["wieslaw.ziewiecki@gmail.com", "l.cichowicz@wp.pl", "piotrek21125@wp.pl"]
+
+windspeed_min = 5
+windspeed_max = 20
+wind_gust = 40
+
+wind_direct_min = 30
+wind_direct_max = 330
+
+temp_min = 5
+precip_max = 3
+
+latitude=49.9746
+longitude=18.9493
+
+min_windspeed = 14
+max_windspeed = 60
+days_ahead = 2
+min_temp = 5
+snow = 0
+precip = 0

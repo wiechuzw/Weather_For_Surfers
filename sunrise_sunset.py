@@ -3,7 +3,7 @@ import toml
 from datetime import datetime, timedelta
 
 import pytz  # Import pytz for timezone handling
-main
+
 
 def read_coordinates(file: str):
     """
@@ -19,7 +19,6 @@ def get_daylight_hours(file: str, date: str = None):
     If the date is not given, the data for the current day is provided.
     It finds sunrise and sunset time for a specific location according to the configuration file.
     The latitude and longitude (specific location) are loaded from a configuration file in TOML format.
-    main
     """
     lat, lon = read_coordinates(file)
     
@@ -51,7 +50,7 @@ def get_daylight_hours(file: str, date: str = None):
     except requests.exceptions.RequestException as e:
         print(f"Error fetching sunrise and sunset data: {e}")
         return None, None
-        main
+        
 
 def main():
     config_file = 'Config_file.toml'
@@ -61,7 +60,7 @@ def main():
         print(f"Sunrise: {sunrise}, Sunset: {sunset}")
     else:
         print("Failed to fetch sunrise and sunset times.")
-        main
+        
 
 if __name__ == '__main__':
     main()

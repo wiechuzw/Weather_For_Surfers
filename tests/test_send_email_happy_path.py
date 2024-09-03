@@ -21,7 +21,7 @@ with patch.dict(os.environ, {
     'EMAIL_PASSWORD': 'test_password',
     'EMAIL_ADDRESS': 'test_address@example.com'
 }):
-    from send_email import send_email
+    from send_email_old import send_email
 
 
 class TestEmailSending(unittest.TestCase):

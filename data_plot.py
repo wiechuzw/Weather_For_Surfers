@@ -165,5 +165,3 @@ else:
     main()
     plt.savefig('weather_plot.png')
     plt.close()
-
-

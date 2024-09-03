@@ -5,15 +5,15 @@ from email.mime.text import MIMEText
 import os
 import toml
 
-# Load the configuration from the TOML file
+# Load configuration from TOML file
 config = toml.load('Config_file.toml')
-
 EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
 EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')
 SUPPORT_ADDRESS = config['support_address']
 
-if EMAIL_PASSWORD is None or EMAIL_ADDRESS is None:
-    raise ValueError("Zmienne środowiskowe EMAIL_PASSWORD lub EMAIL_ADDRESS nie zostały ustawione")
+# Validate environment variables
+if not EMAIL_PASSWORD or not EMAIL_ADDRESS:
+    raise ValueError("Environment variables EMAIL_PASSWORD or EMAIL_ADDRESS are not set")
 
 def send_error_email(program_name, error_message):
     subject = f"Error in {program_name}"
@@ -26,34 +26,43 @@ def send_error_email(program_name, error_message):
     msg.attach(MIMEText(body, 'plain'))
     
     try:
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
-        server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-        text = msg.as_string()
-        server.sendmail(EMAIL_ADDRESS, SUPPORT_ADDRESS, text)
-        server.quit()
+        with smtplib.SMTP('smtp.gmail.com', 587) as server:
+            server.starttls()
+            server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+            server.sendmail(EMAIL_ADDRESS, SUPPORT_ADDRESS, msg.as_string())
         print(f"Error email sent for {program_name}")
     except Exception as e:
         print(f"Failed to send error email: {e}")
 
-def run_program(program_name, script_name):
+def run_program(command_with_args):
     try:
-        result = subprocess.run(["python", script_name], check=True, capture_output=True, text=True)
-        print(f"{program_name} completed successfully")
-        return result.stdout
+        result = subprocess.run(command_with_args, check=True, capture_output=True, text=True)
+        print(f"{command_with_args[0]} completed successfully")
+        return result.stdout, result.returncode
     except subprocess.CalledProcessError as e:
-        print(f"{program_name} failed with error: {e.stderr}")
-        send_error_email(program_name, e.stderr)
-        raise
+        print(f"{command_with_args[0]} failed with error: {e.stderr}")
+        send_error_email(command_with_args[0], e.stderr)
+        return e.stderr, e.returncode
 
 def main():
-    try:
-        # run_program("Data Loading", "data_loading")
-        run_program("Data Plotting", "data_plot.py")
-        run_program("Send Email", "send_email.py")
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        print("Execution stopped due to an error")
+    print("Running weather conditions check...")
+    stdout, returncode = run_program(["python", "checking_conditions.py"])
+
+    print(f"Output from checking_conditions.py:\n{stdout}")
+    print(f"Return code from checking_conditions.py: {returncode}")
+    
+    if "It looks like the wind is coming -> tomorrow" in stdout:
+        weather_message = "It looks like the wind is coming -> tomorrow"
+    elif "After tomorrow cool wind will be expected" in stdout:
+        weather_message = "After tomorrow cool wind will be expected"
+    else:
+        weather_message = "Weather conditions worse than required"
+
+    if returncode == 0:
+        print("Conditions are good, sending email...")
+        run_program(["python", "send_email.py", weather_message])
+    else:
+        print("Conditions are not met, skipping email sending.")
 
 if __name__ == '__main__':
     main()

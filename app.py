@@ -27,6 +27,7 @@ def send_error_email(program_name, error_message):
     
     try:
         with smtplib.SMTP('smtp.gmail.com', 587) as server:
+            server.set_debuglevel(1)  # Enable SMTP debug mode
             server.starttls()
             server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             server.sendmail(EMAIL_ADDRESS, SUPPORT_ADDRESS, msg.as_string())

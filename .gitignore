@@ -4,4 +4,4 @@ PYTHON.code-workspace
 __pycache__
 *.pyc
 *.pyo
-*.png
+# *.png

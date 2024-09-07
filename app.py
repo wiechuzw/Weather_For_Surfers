@@ -42,7 +42,9 @@ def run_program(command_with_args):
         return result.stdout, result.returncode
     except subprocess.CalledProcessError as e:
         print(f"{command_with_args[0]} failed with error: {e.stderr}")
-        send_error_email(command_with_args[0], e.stderr)
+        # Only send email if error code is other than 1
+        if e.returncode != 1:
+            send_error_email(command_with_args[0], e.stderr)
         return e.stderr, e.returncode
 
 def main():
@@ -61,7 +63,7 @@ def main():
 
     if returncode == 0:
         print("Conditions are good, sending email...")
-        run_program(["python", "send_email.py", weather_message])
+        run_program(["python", "send_email.py", "good", weather_message])
     else:
         print("Conditions are not met, skipping email sending.")
 

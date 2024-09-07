@@ -18,9 +18,9 @@ email_address = os.getenv('EMAIL_ADDRESS')
 if not email_password or not email_address:
     raise ValueError("Environment variables EMAIL_PASSWORD or EMAIL_ADDRESS are not set")
 
-def send_email(subject, body, attachment_path):
+def send_email(subject, body, attachment_path=None):
     """
-    Create and send an email with the specified subject, body, and attachment.
+    Create and send an email with the specified subject, body, and optional attachment.
     """
     # Create the email message
     msg = MIMEMultipart()
@@ -31,7 +31,7 @@ def send_email(subject, body, attachment_path):
     # Attach the body text
     msg.attach(MIMEText(body, 'plain'))
     
-    # Attach the file
+    # Attach the file if provided
     if attachment_path:
         try:
             with open(attachment_path, 'rb') as attachment:
@@ -55,9 +55,17 @@ def send_email(subject, body, attachment_path):
         print(f"Error occurred while sending the email: {e}")
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print("No weather message provided")
+    if len(sys.argv) < 3:
+        print("Insufficient arguments provided")
         sys.exit(1)
 
-    weather_message = sys.argv[1]
-    send_email("Weather_For_Surfers", weather_message, 'weather_plot.png')
+    status = sys.argv[1]  # e.g., 'error' or 'good'
+    weather_message = sys.argv[2]
+
+    if status == 'error':
+        send_email("Error in Python Program", weather_message)
+    elif status == 'good':
+        send_email("Weather_For_Surfers", weather_message, 'weather_plot.png')
+    else:
+        print("Invalid status argument")
+        sys.exit(1)

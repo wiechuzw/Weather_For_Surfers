@@ -1,5 +1,4 @@
 from typing import Any
-
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from matplotlib.lines import Line2D
@@ -8,10 +7,10 @@ import numpy as np
 import seaborn as sns
 import pandas as pd
 
-FILE ='./data_weather/visualcrossing.csv'
+FILE = './data_weather/visualcrossing.csv'
 CONFIG_FILE = 'Config_file.toml'
 
-def modify_loc(location:str)->str:
+def modify_loc(location: str) -> str:
     '''
     Shortens the name of location to only city name
     '''
@@ -30,7 +29,7 @@ def night_hours(data: pd.DataFrame, ax1: Any, ax2: Any) -> None:
             ax1.axvspan(current_time, next_time, facecolor='#333333', alpha=0.2)
             ax2.axvspan(current_time, next_time, facecolor='#333333', alpha=0.2)
 
-def get_data(hours: int)->pd.DataFrame:
+def get_data(hours: int) -> pd.DataFrame:
     '''
     Loads data from specified *.csv file for given number of hours. 
     Returns 'DataFrame' object.
@@ -74,7 +73,11 @@ def main():
 
     # Setting X axis labels for the upper graph
     ax[0].xaxis.set_major_formatter(mdates.DateFormatter('%d-%m %H'))  # Format as day-month hour
-    ax[0].xaxis.set_major_locator(mdates.HourLocator(interval=3))  
+
+    # Zmieniamy lokalizator główny na godziny co 2 (parzyste godziny)
+    ax[0].xaxis.set_major_locator(mdates.HourLocator(byhour=range(0, 24, 2)))
+
+    # Pozostawiamy lokalizator mniejszy co godzinę
     ax[0].xaxis.set_minor_locator(mdates.HourLocator())  
     plt.setp(ax[0].xaxis.get_majorticklabels(), rotation=45, ha='right')
 
@@ -113,8 +116,12 @@ def main():
     ax_right_dwn.tick_params(axis='y', labelcolor='black')
 
     # Setting axis labels for the lower graph
-    ax_left_dwn.xaxis.set_major_formatter(mdates.DateFormatter('%d-%m %H'))
-    ax_left_dwn.xaxis.set_major_locator(mdates.HourLocator(interval=3))  
+    ax_left_dwn.xaxis.set_major_formatter(mdates.DateFormatter('%d-%m %H'))  # Format as day-month hour
+
+    # Zmieniamy lokalizator główny na godziny co 2 (parzyste godziny)
+    ax_left_dwn.xaxis.set_major_locator(mdates.HourLocator(byhour=range(0, 24, 2)))
+
+    # Pozostawiamy lokalizator mniejszy co godzinę
     ax_left_dwn.xaxis.set_minor_locator(mdates.HourLocator())  
     plt.setp(ax_left_dwn.xaxis.get_majorticklabels(), rotation=45, ha='right')
 

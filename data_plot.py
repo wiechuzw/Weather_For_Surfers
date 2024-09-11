@@ -138,7 +138,8 @@ def main():
 if __name__ == '__main__':
     plt = main()
     plt.savefig('weather_plot.png')
-    plt.show()
+    # plt.show()
+    # plt.show(block=False)  # Non-blocking show
 else:
     plt = main()
     plt.savefig('weather_plot.png')

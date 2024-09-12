@@ -149,8 +149,10 @@ def main():
     return plt
 
 if __name__ == '__main__':
+
     main()
     plt.show()
+
 else:
     main()
     plt.savefig('weather_plot.png')

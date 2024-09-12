@@ -1,5 +1,5 @@
 from typing import Any
-
+import locale
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from matplotlib.lines import Line2D
@@ -8,10 +8,10 @@ import numpy as np
 import seaborn as sns
 import pandas as pd
 
-FILE ='./data_weather/visualcrossing.csv'
+FILE = './data_weather/visualcrossing.csv'
 CONFIG_FILE = 'Config_file.toml'
 
-def modify_loc(location:str)->str:
+def modify_loc(location: str) -> str:
     '''
     Shortens the name of location to only city name
     '''
@@ -30,7 +30,7 @@ def night_hours(data: pd.DataFrame, ax1: Any, ax2: Any) -> None:
             ax1.axvspan(current_time, next_time, facecolor='#333333', alpha=0.2)
             ax2.axvspan(current_time, next_time, facecolor='#333333', alpha=0.2)
 
-def get_data(hours: int)->pd.DataFrame:
+def get_data(hours: int) -> pd.DataFrame:
     '''
     Loads data from specified *.csv file for given number of hours. 
     Returns 'DataFrame' object.
@@ -51,6 +51,8 @@ def get_data(hours: int)->pd.DataFrame:
 
 def main():
     data = get_data(56)
+
+    locale.setlocale(locale.LC_TIME, 'polish')
   
     fig, ax = plt.subplots(2, 1, figsize=(15,6), layout='constrained')
     sns.set_style("whitegrid")
@@ -72,11 +74,14 @@ def main():
     ax_right_up.set_ylabel('Temperatura (°C)', color='red')
     ax_right_up.tick_params(axis='y', labelcolor='red')
 
-    # Setting X axis labels for the upper graph
-    ax[0].xaxis.set_major_formatter(mdates.DateFormatter('%d-%m %H'))  # Format as day-month hour
-    ax[0].xaxis.set_major_locator(mdates.HourLocator(interval=3))  
-    ax[0].xaxis.set_minor_locator(mdates.HourLocator())  
+    ax[0].xaxis.set_major_locator(mdates.HourLocator(interval=2))  
+    ax[0].xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))  
     plt.setp(ax[0].xaxis.get_majorticklabels(), rotation=45, ha='right')
+    # Set date as larger 'tic'
+    ax[0].xaxis.set_minor_locator(mdates.DayLocator(interval=1))  
+    ax[0].xaxis.set_minor_formatter(mdates.DateFormatter('%d-%B'))  
+    ax[0].xaxis.set_minor_locator(mdates.HourLocator(byhour=12))
+    ax[0].tick_params(axis='x', which='minor', pad=30, labelsize='large')  
 
     # Grid
     ax[0].grid(which='major', linestyle='-', linewidth='0.5', color='gray')
@@ -88,14 +93,18 @@ def main():
                             color='salmon', alpha=0.2)
 
     # Arrows pointing wind direction
-    arrow_length = 1.5  
-    arrow_y = data['windspeed'].mean() + 15
-
+    arrow_length = 1.5
+    arrow_y = data['temp'].mean()
     for i in range(len(data)):
-        wind_dir_rad = np.deg2rad(data['winddir'].iloc[i]) 
-        x = data.index[i]
-        dy = arrow_length * np.sin(wind_dir_rad)  
-        ax_right_up.annotate('', xy=(x + pd.Timedelta(hours=0.1), arrow_y + dy), xytext=(x, arrow_y),
+        wind_dir_rad = np.deg2rad(data['winddir'].iloc[i])  
+        x = data.index[i] 
+       
+        dx = arrow_length * np.cos(wind_dir_rad)  
+        dy = arrow_length * np.sin(wind_dir_rad) 
+
+        dx_timedelta = pd.Timedelta(hours=dx)
+        
+        ax_right_up.annotate('', xy=(x + dx_timedelta, arrow_y + dy), xytext=(x, arrow_y),
                             arrowprops=dict(arrowstyle='->', color='red', lw=1.5))
 
     # Lower Graph
@@ -113,10 +122,14 @@ def main():
     ax_right_dwn.tick_params(axis='y', labelcolor='black')
 
     # Setting axis labels for the lower graph
-    ax_left_dwn.xaxis.set_major_formatter(mdates.DateFormatter('%d-%m %H'))
-    ax_left_dwn.xaxis.set_major_locator(mdates.HourLocator(interval=3))  
-    ax_left_dwn.xaxis.set_minor_locator(mdates.HourLocator())  
+    ax_left_dwn.xaxis.set_major_locator(mdates.HourLocator(interval=2))  
+    ax_left_dwn.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))  
     plt.setp(ax_left_dwn.xaxis.get_majorticklabels(), rotation=45, ha='right')
+    # Set date as larger 'tic'
+    ax_left_dwn.xaxis.set_minor_locator(mdates.DayLocator(interval=1))  
+    ax_left_dwn.xaxis.set_minor_formatter(mdates.DateFormatter('%d-%B'))  
+    ax_left_dwn.xaxis.set_minor_locator(mdates.HourLocator(byhour=12))
+    ax_left_dwn.tick_params(axis='x', which='minor', pad=30, labelsize='large')  
 
     # Grid
     ax_left_dwn.grid(which='major', linestyle='-', linewidth='0.5', color='blue')
@@ -136,11 +149,11 @@ def main():
     return plt
 
 if __name__ == '__main__':
-    plt = main()
-    plt.savefig('weather_plot.png')
-    # plt.show()
-    # plt.show(block=False)  # Non-blocking show
+
+    main()
+    plt.show()
+
 else:
-    plt = main()
+    main()
     plt.savefig('weather_plot.png')
-    plt.close()
+    

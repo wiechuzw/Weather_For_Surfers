@@ -49,13 +49,6 @@ def get_data(hours: int) -> pd.DataFrame:
     data = data.iloc[12:hours+12]
     return data
 
-# def main():
-#     data = get_data(56)
-
-#     locale.setlocale(locale.LC_TIME, 'polish')
-  
-#     fig, ax = plt.subplots(2, 1, figsize=(15,6), layout='constrained')
-#     sns.set_style("whitegrid")
 
 def main():
     data = get_data(56)

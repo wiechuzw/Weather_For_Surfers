@@ -5,6 +5,7 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 import os
+import datetime
 import toml
 
 # Load configuration from TOML file
@@ -13,11 +14,34 @@ EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
 EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')
 SUPPORT_ADDRESS = config['support_address']
 
+# File to store the last email date
+LAST_EMAIL_FILE = 'last_email_date.txt'
+
 # Validate environment variables
 if not EMAIL_PASSWORD or not EMAIL_ADDRESS:
     raise ValueError("Environment variables EMAIL_PASSWORD or EMAIL_ADDRESS are not set")
 
+def has_email_been_sent_today():
+    """
+    Checks if the email has already been sent today by reading the date from LAST_EMAIL_FILE.
+    """
+    if not os.path.exists(LAST_EMAIL_FILE):
+        return False
+    with open(LAST_EMAIL_FILE, 'r') as f:
+        last_email_date = f.read().strip()
+    return last_email_date == datetime.date.today().strftime('%Y-%m-%d')
+
+def update_last_email_date():
+    """
+    Updates the LAST_EMAIL_FILE with today's date after sending an email.
+    """
+    with open(LAST_EMAIL_FILE, 'w') as f:
+        f.write(datetime.date.today().strftime('%Y-%m-%d'))
+
 def send_error_email(program_name, error_message):
+    """
+    Sends an email to the support address if there is an error in the program.
+    """
     subject = f"Error in {program_name}"
     body = f"An error occurred while running {program_name}:\n\n{error_message}"
     
@@ -38,6 +62,9 @@ def send_error_email(program_name, error_message):
         print(f"Failed to send error email: {e}")
 
 def run_program(command_with_args):
+    """
+    Executes a subprocess to run a program and returns its output and return code.
+    """
     try:
         result = subprocess.run(command_with_args, check=True, capture_output=True, text=True)
         print(f"{command_with_args[0]} completed successfully")
@@ -50,6 +77,9 @@ def run_program(command_with_args):
         return e.stderr, e.returncode
 
 def main():
+    """
+    Main function to check weather conditions, generate a plot, and send email if conditions are met.
+    """
     print("Running weather conditions check...")
     stdout, returncode = run_program(["python", "checking_conditions.py"])
 
@@ -73,9 +103,14 @@ def main():
     else:
         weather_message = "Weather conditions worse than required"
 
+    # Send email if conditions are met and no email has been sent today
     if returncode == 0:
-        print("Conditions are good, sending email...")
-        run_program(["python", "send_email.py", "good", weather_message])
+        if not has_email_been_sent_today():
+            print("Conditions are good, sending email...")
+            run_program(["python", "send_email.py", "good", weather_message])
+            update_last_email_date()  # Update the date after sending the email
+        else:
+            print("Email has already been sent today. Skipping.")
     else:
         print("Conditions are not met, skipping email sending.")
 

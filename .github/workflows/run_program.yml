@@ -26,6 +26,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Download last email artifact
+      run: |
+        gh run download --name last_email_date --dir . || echo "No previous artifact found"
+
     - name: Set environment variables
       run: |
         echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> $GITHUB_ENV
@@ -41,3 +45,13 @@ jobs:
 
     - name: Run script
       run: python app.py
+
+    - name: Log Data Update
+      run: cat ./data_weather/data_update_log.txt
+
+    - name: Upload last email date artifact
+      run: |
+        if [ -f last_email_date.txt ]; then
+          gh run upload last_email_date.txt --name last_email_date
+        else
+          echo "last_email_date.txt not found, skipping upload."

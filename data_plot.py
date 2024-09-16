@@ -98,7 +98,7 @@ def main():
                             color='salmon', alpha=0.2)
 
     # Arrows pointing wind direction
-    arrow_length = 1.5
+    arrow_length = 1.0
     arrow_y = data['temp'].mean()
     for i in range(len(data)):
         wind_dir_rad = np.deg2rad(data['winddir'].iloc[i])  

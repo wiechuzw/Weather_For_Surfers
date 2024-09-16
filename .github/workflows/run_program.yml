@@ -2,9 +2,9 @@ name: Run Program Periodically
 
 on:
   schedule:
-    - cron: '5 6 * * *'  # Runs at 06:05 (UTC)
-    - cron: '5 12 * * *' # Runs at 12:05 (UTC)
-    - cron: '5 18 * * *' # Runs at 18:05 (UTC)
+    - cron: '5 6 * * *'  # Runs at 06:05 (UTC) -> 08:05 (Polish time)
+    - cron: '5 12 * * *' # Runs at 12:05 (UTC) -> 14:05 (Polish time)
+    - cron: '5 18 * * *' # Runs at 18:05 (UTC) -> 20:05 (Polish time)
 
   workflow_dispatch: # Allows manual triggering
 
@@ -50,8 +50,13 @@ jobs:
       run: cat ./data_weather/data_update_log.txt
 
     - name: Upload last email date artifact
+      if: always()  # Ensures the step runs even if previous steps fail
       run: |
         if [ -f last_email_date.txt ]; then
-          gh run upload last_email_date.txt --name last_email_date
+          echo "Uploading last_email_date.txt..."
         else
           echo "last_email_date.txt not found, skipping upload."
+    - uses: actions/upload-artifact@v3
+      with:
+        name: last_email_date
+        path: last_email_date.txt

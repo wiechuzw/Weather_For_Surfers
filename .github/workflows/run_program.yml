@@ -54,8 +54,8 @@ jobs:
       run: |
         if [ -f last_email_date.txt ]; then
           echo "Uploading last_email_date.txt..."
-        else
-          echo "last_email_date.txt not found, skipping upload."
+        fi
+
     - uses: actions/upload-artifact@v3
       with:
         name: last_email_date

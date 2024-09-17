@@ -26,7 +26,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    # Step to install GitHub CLI
+    - name: Install GitHub CLI
+      run: sudo apt-get install gh
+
     - name: Download last email artifact
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Set GH_TOKEN to access GitHub CLI
       run: |
         gh run download --name last_email_date --dir . || echo "No previous artifact found"
 
@@ -60,3 +66,4 @@ jobs:
       with:
         name: last_email_date
         path: last_email_date.txt
+

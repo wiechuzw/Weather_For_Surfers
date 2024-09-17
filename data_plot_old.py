@@ -1,4 +1,3 @@
-import os
 from typing import Any
 import locale
 import matplotlib.pyplot as plt
@@ -46,6 +45,7 @@ def get_data(hours: int) -> pd.DataFrame:
                         )
 
     data['name'] = data['name'].apply(modify_loc)
+
     data = data.iloc[12:hours+12]
     return data
 
@@ -135,9 +135,11 @@ def main():
     ax_left_dwn.xaxis.set_minor_formatter(mdates.DateFormatter('%d-%B'))  
     ax_left_dwn.xaxis.set_minor_locator(mdates.HourLocator(byhour=12))
     ax_left_dwn.tick_params(axis='x', which='minor', pad=30, labelsize='large')  
+
     # Grid
     ax_left_dwn.grid(which='major', linestyle='-', linewidth='0.5', color='blue')
     ax_right_dwn.grid(which='minor', linestyle=':', linewidth='0.5', color='orange')
+
     # Created 'Wind Direction Marker' 
     arrow_legend = Line2D([0], [0], color='red', lw=0.5, marker='>', markersize=5, label='Kierunek wiatru')
 
@@ -149,13 +151,14 @@ def main():
 
     night_hours(data, ax[0], ax[1])
 
-    output_file = os.path.join(os.getcwd(), 'weather_plot.png')
-    
-    try:
-        plt.savefig(output_file)
-        print(f'Plot saved successfully as {output_file}')
-    except Exception as e:
-        print(f'Error saving plot: {e}')
+    return plt
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     main()
+    plt.savefig('weather_plot.png')
+#     plt.show()
+
+# else:
+#     main()
+#     plt.savefig('weather_plot.png')

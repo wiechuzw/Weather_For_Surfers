@@ -38,6 +38,9 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Set GH_TOKEN to access GitHub CLI
       run: |
+        if [ -f last_email_date.txt ]; then
+          rm last_email_date.txt
+        fi
         gh run download --name last_email_date --dir . || echo "No previous artifact found"
 
     - name: Set environment variables
@@ -66,8 +69,8 @@ jobs:
           echo "Uploading last_email_date.txt..."
         fi
 
-    - uses: actions/upload-artifact@v3
+    # Update to use the v4 version of upload-artifact
+    - uses: actions/upload-artifact@v4
       with:
         name: last_email_date
         path: last_email_date.txt
-

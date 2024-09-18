@@ -15,7 +15,8 @@ EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')
 SUPPORT_ADDRESS = config['support_address']
 
 # File to store the last email date
-LAST_EMAIL_FILE = 'last_email_date.txt'
+# LAST_EMAIL_FILE = 'last_email_date.txt'
+LAST_EMAIL_FILE = os.path.join(os.getcwd(), 'last_email_date.txt')
 
 # Validate environment variables
 if not EMAIL_PASSWORD or not EMAIL_ADDRESS:
@@ -38,6 +39,16 @@ def update_last_email_date():
     with open(LAST_EMAIL_FILE, 'w') as f:
         f.write(datetime.date.today().strftime('%Y-%m-%d'))
 
+def log_last_email_date():
+    """
+    Logs the content of the LAST_EMAIL_FILE if it exists.
+    """
+    if os.path.exists(LAST_EMAIL_FILE):
+        with open(LAST_EMAIL_FILE, 'r') as f:
+            print("Zawartość last_email_date.txt:", f.read())
+    else:
+        print("Plik last_email_date.txt nie istnieje.")
+
 def send_error_email(program_name, error_message):
     """
     Sends an email to the support address if there is an error in the program.
@@ -59,7 +70,7 @@ def send_error_email(program_name, error_message):
             server.sendmail(EMAIL_ADDRESS, SUPPORT_ADDRESS, msg.as_string())
         print(f"Error email sent for {program_name}")
     except Exception as e:
-        print(f"Failed to send error email: {e}")
+        print(f"Failed to send error email: {e}, Program Name: {program_name}, Error Message: {error_message}")
 
 def run_program(command_with_args):
     """
@@ -75,6 +86,7 @@ def run_program(command_with_args):
         if e.returncode != 1:
             send_error_email(command_with_args[0], e.stderr)
         return e.stderr, e.returncode
+
 
 def main():
     """
@@ -103,16 +115,17 @@ def main():
     else:
         weather_message = "Weather conditions worse than required"
 
+    # Log the current state of the last email date file
+    log_last_email_date()  
+
     # Send email if conditions are met and no email has been sent today
     if returncode == 0:
         if not has_email_been_sent_today():
             print("Conditions are good, sending email...")
             run_program(["python", "send_email.py", "good", weather_message])
             update_last_email_date()  # Update the date after sending the email
+            log_last_email_date()  # <- Logujemy zawartość pliku po zaktualizowaniu
         else:
             print("Email has already been sent today. Skipping.")
     else:
         print("Conditions are not met, skipping email sending.")
-
-if __name__ == '__main__':
-    main()

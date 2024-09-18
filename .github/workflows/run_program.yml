@@ -53,6 +53,9 @@ jobs:
         ls -l ./data_weather
         cat ./data_weather/visualcrossing.csv
 
+    - name: Download last email artifact
+      run: gh run download --name last_email_date --dir .
+
     - name: Run script
       run: python app.py
 

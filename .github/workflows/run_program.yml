@@ -35,10 +35,10 @@ jobs:
       run: sudo apt-get update && sudo apt-get install gh
 
     - name: Download last email artifact
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Set GH_TOKEN to access GitHub CLI
-      run: |
-        gh run download --name last_email_date --dir . || echo "No previous artifact found"
+      uses: actions/download-artifact@v3
+      with:
+        name: last_email_date
+        path: .
 
     - name: Set environment variables
       run: |
@@ -61,13 +61,7 @@ jobs:
 
     - name: Upload last email date artifact
       if: always()  # Ensures the step runs even if previous steps fail
-      run: |
-        if [ -f last_email_date.txt ]; then
-          echo "Uploading last_email_date.txt..."
-        fi
-
-    - uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3
       with:
         name: last_email_date
         path: last_email_date.txt
-

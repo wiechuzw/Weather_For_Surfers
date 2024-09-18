@@ -36,6 +36,17 @@ jobs:
         sudo apt-get update
         sudo apt-get install gh
 
+    - name: Create temp directory for artifact
+      run: mkdir -p temp_dir
+
+    - name: Download last email artifact
+      run: gh run download --name last_email_date --dir temp_dir
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Move last_email_date.txt to root
+      run: mv temp_dir/last_email_date.txt .
+
     - name: Create last_email_date.txt if not exists
       run: |
         if [ ! -f last_email_date.txt ]; then
@@ -54,11 +65,6 @@ jobs:
       run: |
         ls -l ./data_weather
         cat ./data_weather/visualcrossing.csv
-
-    - name: Download last email artifact
-      run: gh run download --name last_email_date --dir .
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Run script
       run: python app.py

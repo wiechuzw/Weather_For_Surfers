@@ -34,11 +34,11 @@ jobs:
     - name: Update GitHub CLI
       run: sudo apt-get update && sudo apt-get install gh
 
-    - name: Download last email artifact
-      uses: actions/download-artifact@v3
-      with:
-        name: last_email_date
-        path: .
+    - name: Create last_email_date.txt if not exists
+      run: |
+        if [ ! -f last_email_date.txt ]; then
+          echo "1970-01-01" > last_email_date.txt
+        fi
 
     - name: Set environment variables
       run: |

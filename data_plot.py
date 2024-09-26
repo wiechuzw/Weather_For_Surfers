@@ -159,3 +159,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+    plt.savefig('weather_plot.png')
+    plt.savefig('website\weather_plot.png')
+#     plt.show()
+
+# else:
+#     main()
+#     plt.savefig('weather_plot.png')

@@ -1,12 +1,16 @@
-name: Run Program Periodically
+name: Run Program Periodically and Deploy to GitHub Pages
 
 on:
   schedule:
-    - cron: '5 6 * * *'  # Runs at 06:05 (UTC)
-    - cron: '5 12 * * *' # Runs at 12:05 (UTC)
-    - cron: '5 18 * * *' # Runs at 18:05 (UTC)
+    - cron: '5 6 * * *'  # Runs at 06:05 (UTC) -> 08:05 (Polish time)
+    - cron: '5 12 * * *' # Runs at 12:05 (UTC) -> 14:05 (Polish time)
+    - cron: '5 18 * * *' # Runs at 18:05 (UTC) -> 20:05 (Polish time)
 
   workflow_dispatch: # Allows manual triggering
+
+permissions:
+  actions: read
+  contents: read
 
 jobs:
   build:
@@ -26,6 +30,29 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    # Step to install GitHub CLI
+    - name: Install GitHub CLI
+      run: |
+        sudo apt-get update
+        sudo apt-get install gh
+
+    - name: Create temp directory for artifact
+      run: mkdir -p temp_dir
+
+    - name: Download last email artifact
+      run: gh run download --name last_email_date --dir temp_dir
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Move last_email_date.txt to root
+      run: mv temp_dir/last_email_date.txt .
+
+    - name: Create last_email_date.txt if not exists
+      run: |
+        if [ ! -f last_email_date.txt ]; then
+          echo "1970-01-01" > last_email_date.txt
+        fi
+
     - name: Set environment variables
       run: |
         echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> $GITHUB_ENV
@@ -41,3 +68,21 @@ jobs:
 
     - name: Run script
       run: python app.py
+
+    - name: Log Data Update
+      run: cat ./data_weather/data_update_log.txt
+
+    - name: Upload last email date artifact
+      if: always()  # Ensures the step runs even if previous steps fail
+      uses: actions/upload-artifact@v3
+      with:
+        name: last_email_date
+        path: last_email_date.txt
+
+    # Deploy to GitHub Pages
+    - name: Deploy to GitHub Pages
+      if: always()  # Deploy even if previous steps fail
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./website

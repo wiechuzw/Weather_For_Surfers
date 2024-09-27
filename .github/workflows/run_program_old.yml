@@ -1,0 +1,43 @@
+name: Run Program Periodically
+
+on:
+  schedule:
+    - cron: '5 6 * * *'  # Runs at 06:05 (UTC)
+    - cron: '5 12 * * *' # Runs at 12:05 (UTC)
+    - cron: '5 18 * * *' # Runs at 18:05 (UTC)
+
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Set environment variables
+      run: |
+        echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> $GITHUB_ENV
+        echo "EMAIL_ADDRESS=${{ secrets.EMAIL_ADDRESS }}" >> $GITHUB_ENV
+
+    - name: Run Data Loading
+      run: python data_loading.py
+
+    - name: Verify Data File
+      run: |
+        ls -l ./data_weather
+        cat ./data_weather/visualcrossing.csv
+
+    - name: Run script
+      run: python app.py

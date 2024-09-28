@@ -10,7 +10,9 @@ on:
 
 permissions:
   actions: read
-  contents: read
+  contents: write  # Added write permissions
+  pages: write      # Write permissions to GitHub Pages
+  id-token: write   # Allows token authorization 
 
 jobs:
   build:
@@ -84,5 +86,5 @@ jobs:
       if: always()  # Deploy even if previous steps fail
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}  # Default GitHub Actions Token
         publish_dir: ./website

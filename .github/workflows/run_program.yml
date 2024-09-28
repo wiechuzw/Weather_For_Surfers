@@ -5,6 +5,7 @@ on:
     - cron: '5 6 * * *'  # Runs at 06:05 (UTC) -> 08:05 (Polish time)
     - cron: '5 12 * * *' # Runs at 12:05 (UTC) -> 14:05 (Polish time)
     - cron: '5 18 * * *' # Runs at 18:05 (UTC) -> 20:05 (Polish time)
+    - cron: '5 19 * * *' # Runs at 18:05 (UTC) -> 21:05 (Polish time)
 
   workflow_dispatch: # Allows manual triggering
 

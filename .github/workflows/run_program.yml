@@ -98,6 +98,13 @@ jobs:
         name: last_email_date
         path: last_email_date.txt
 
+    - name: Update image URL with a timestamp
+      run: |
+        sed -i 's/src="path\/to\/image.png"/src="path\/to\/image.png?time=$(date +%s)"/' ./website/index.html
+        git add ./website/index.html
+        git commit -m "Update image URL with timestamp"
+      continue-on-error: true
+
     # Deploy to GitHub Pages
     - name: Deploy to GitHub Pages
       if: always()  # Deploy even if previous steps fail

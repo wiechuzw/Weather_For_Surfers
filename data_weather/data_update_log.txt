@@ -18,15 +18,4 @@ Date of download weather data: 2024-09-30 20:43:14
 Date of download weather data: 2024-10-01 06:34:15
 Date of download weather data: 2024-10-01 12:37:36
 Date of download weather data: 2024-10-01 18:31:58
-Date of download weather data: 2024-10-01 20:25:49
-Date of download weather data: 2024-10-01 20:43:18
-Date of download weather data: 2024-10-02 06:32:35
-Date of download weather data: 2024-10-02 12:36:55
-Date of download weather data: 2024-10-02 14:21:44
-Date of download weather data: 2024-10-02 15:49:28
-Date of download weather data: 2024-10-02 16:32:09
-Date of download weather data: 2024-10-02 18:21:31
-Date of download weather data: 2024-10-02 18:32:48
-Date of download weather data: 2024-10-02 20:00:14
-Date of download weather data: 2024-10-02 20:26:58
-Date of download weather data: 2024-10-02 20:46:18
+Date of download weather data: 2024-10-02 23:12:07

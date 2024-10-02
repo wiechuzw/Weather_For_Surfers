@@ -5,7 +5,7 @@ on:
     - cron: '5 6 * * *'  # Runs at 06:05 (UTC) -> 08:05 (Polish time)
     - cron: '5 12 * * *' # Runs at 12:05 (UTC) -> 14:05 (Polish time)
     - cron: '5 18 * * *' # Runs at 18:05 (UTC) -> 20:05 (Polish time)
-    - cron: '40 20 * * *' # Runs at 19:05 (UTC) -> 22:40 (Polish time)
+    - cron: '5 20 * * *' # Runs at 19:05 (UTC) -> 22:05 (Polish time)
 
   workflow_dispatch: # Allows manual triggering
 
@@ -93,17 +93,14 @@ jobs:
 
     - name: Upload last email date artifact
       if: always()  # Ensures the step runs even if previous steps fail
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: last_email_date
         path: last_email_date.txt
 
     - name: Update image URL with a timestamp
       run: |
-        sed -i 's/src="weather_plot.png"/src="weather_plot.png?time=$(date +%s)"/' ./website/index.html
-        git add ./website/index.html
-        git commit -m "Update image URL with timestamp"
-      continue-on-error: true
+        sed -i 's/src="weather_plot.png[^"]*"/src="weather_plot.png?time=$(date +%s)"/' ./website/index.html   
 
    
     # Deploy to GitHub Pages

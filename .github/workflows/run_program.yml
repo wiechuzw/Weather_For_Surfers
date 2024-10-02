@@ -101,8 +101,10 @@ jobs:
     - name: Update image URL with a timestamp
       run: |
         sed -i 's/src="weather_plot.png[^"]*"/src="weather_plot.png?time=$(date +%s)"/' ./website/index.html   
+     
+    - name: Verify index.html after sed
+      run: cat ./website/index.html
 
-   
     # Deploy to GitHub Pages
     - name: Deploy to GitHub Pages
       if: always()  # Deploy even if previous steps fail

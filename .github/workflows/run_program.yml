@@ -100,7 +100,7 @@ jobs:
 
     - name: Update image URL with a timestamp
       run: |
-        sed -i 's/src="path\/to\/image.png"/src="path\/to\/image.png?time=$(date +%s)"/' ./website/index.html
+        sed -i 's/src="weather_plot.png"/src="weather_plot.png?time=$(date +%s)"/' ./website/index.html
         git add ./website/index.html
         git commit -m "Update image URL with timestamp"
       continue-on-error: true

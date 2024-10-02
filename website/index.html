@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wykres Pogody dla Surferów</title>
     <link rel="stylesheet" href="styles.css"> <!-- bez website/ -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Dodaj ten skrypt -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Dodano skrypt Chart.js -->
 </head>
 <body>
     <h1>Wykres Pogody dla Surferów</h1>
-    <img src="weather_plot.png" alt="Wykres Pogody dla Surferów"> <!-- bez website/ -->
-    <canvas id="weatherChart" width="400" height="200"></canvas> <!-- dodane -->
+    <!-- Dodano znacznik czasowy (timestamp) do URL obrazka -->
+    <img src="weather_plot.png?time=1234567890" alt="Wykres Pogody dla Surferów"> 
+    <canvas id="weatherChart" width="400" height="200"></canvas> <!-- Canvas dla wykresu -->
     <script src="script.js"></script> <!-- bez website/ -->
 </body>
 </html>

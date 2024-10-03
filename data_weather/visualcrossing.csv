@@ -11,7 +11,7 @@ name,datetime,temp,feelslike,dew,humidity,precip,precipprob,preciptype,snow,snow
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-10-03T09:00:00,9.9,7.8,9,93.64,0,0,rain,0,0,16.2,15.5,248,1010.3,91.4,6.3,11,0,0,10,Overcast,cloudy,"EPKT,LKMT,EPKK,F8705"
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-10-03T10:00:00,10.2,10.2,9.3,94.09,0.1,100,rain,0,0,16.9,12.8,250,1010.3,91.4,8.5,44,0.2,0,10,"Rain, Overcast",rain,"EPKT,LKMT,EPKK,F8705"
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-10-03T11:00:00,10.5,10.5,9,90.2,0,0,rain,0,0,18.7,14.7,272,1010.6,95.8,10,40,0.1,0,10,Overcast,cloudy,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-10-03T12:00:00,10.8,10.8,9,88.13,0,0,rain,0,0,18.7,17.4,284,1011.3,95.8,10,32,0.1,0,10,Overcast,cloudy,"EPKT,LKMT,EPKK,F8705"
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-10-03T12:00:00,10.8,10.8,9,88.13,0,0,rain,0,0,18.7,17.4,284,1011.3,95.8,10,35,0.1,0,10,Overcast,cloudy,"EPKT,LKMT,EPKK,F8705"
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-10-03T13:00:00,10.2,10.2,9,91.9,0,0,,0,0,21.6,18.2,289,1011.3,95.8,8.1,41,0.1,0,10,Overcast,cloudy,"EPKT,LKMT,EPKK,F8705"
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-10-03T14:00:00,10.6,10.6,9,89.79,0,0,,0,0,22,17.2,296,1011.7,95.8,10,34,0.1,0,10,Overcast,cloudy,"EPKT,LKMT,EPKK,F8705"
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-10-03T15:00:00,10.6,10.6,9,89.66,0,0,,0,0,22.3,14.2,307,1012,95.8,10,29,0.1,0,10,Overcast,cloudy,"EPKT,LKMT,EPKK,F8705"

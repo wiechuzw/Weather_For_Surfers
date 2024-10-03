@@ -160,4 +160,4 @@ def main():
 if __name__ == "__main__":
     main()
     plt.savefig('weather_plot.png')
-    plt.savefig(os.path.join('website', 'weather_plot.png'))
+    plt.savefig(os.path.join('website', 'weather_plot2.png'))

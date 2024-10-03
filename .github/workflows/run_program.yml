@@ -98,16 +98,16 @@ jobs:
         name: last_email_date
         path: last_email_date.txt
 
-    - name: Log current timestamp in Polish time
+    - name: Display index.html before sed
+      run: cat ./website/index.html
+
+    - name: Log current timestamp
       run: |
-        echo "Current timestamp in Polish time: $(date -u -d '+2 hours' +%s)"
+        echo "Current timestamp: $(date +%s)"
 
     - name: Update image URL with a timestamp
       run: |           
-        sed -i "s/src=\"weather_plot.png[^\"]*\"/src=\"weather_plot.png?time=$(date -u -d '+2 hours' +%s)\"/" ./website/index.html
-
-    - name: Verify index.html after sed
-      run: cat ./website/index.html
+        sed -i "s/src=\"weather_plot.png[^\"]*\"/src=\"weather_plot.png?time=$(date +%s)\"/" ./website/index.html
 
     - name: Display index.html after sed
       run: cat ./website/index.html

@@ -105,6 +105,9 @@ jobs:
     - name: Verify index.html after sed
       run: cat ./website/index.html
 
+    - name: Display index.html after sed
+      run: cat ./website/index.html
+
     # Deploy to GitHub Pages
     - name: Deploy to GitHub Pages
       if: always()  # Deploy even if previous steps fail

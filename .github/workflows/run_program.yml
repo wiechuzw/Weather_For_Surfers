@@ -99,7 +99,7 @@ jobs:
         path: last_email_date.txt
 
     - name: Display index.html before sed
-      run: cat ./index.html
+      run: cat ./website/index.html
 
     - name: Log current timestamp
       run: |
@@ -107,10 +107,10 @@ jobs:
 
     - name: Update image URL with a timestamp
       run: |           
-        sed -i "s/src=\"weather_plot2.png[^\"]*\"/src=\"weather_plot2.png?time=$(date +%s)\"/" ./index.html
+        sed -i "s/src=\"weather_plot2.png[^\"]*\"/src=\"weather_plot2.png?time=$(date +%s)\"/" ./website/index.html
 
     - name: Display index.html after sed
-      run: cat ./index.html
+      run: cat ./website/index.html
 
     # Deploy to GitHub Pages
     - name: Deploy to GitHub Pages
@@ -118,4 +118,4 @@ jobs:
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}  # Default GitHub Actions Token
-        publish_dir: ./
+        publish_dir: ./website

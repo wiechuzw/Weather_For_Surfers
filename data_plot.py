@@ -1,12 +1,14 @@
 from typing import Any
 import locale
 import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 import matplotlib.dates as mdates
 from matplotlib.lines import Line2D
 from sunrise_sunset import get_daylight_hours
 import numpy as np
 import seaborn as sns
 import pandas as pd
+
 
 FILE = './data_weather/visualcrossing.csv'
 CONFIG_FILE = 'Config_file.toml'
@@ -50,6 +52,7 @@ def get_data(hours: int) -> pd.DataFrame:
     return data
 
 def main():
+
     data = get_data(56)
 
     locale.setlocale(locale.LC_TIME, 'polish')
@@ -59,9 +62,30 @@ def main():
 
     # TOP Graph
 
+    ###      Enhanced wind speed depiction
+    # wind bars colors
+    min_wind = 8
+    max_wind = 40
+    wind_colors_and_range = {
+        f'0 - {min_wind}km/h'           : '#ffdd33',    # dark yellow
+        f'{min_wind} - {max_wind}km/h'  : '#189908',    # dark green
+        f'{max_wind} +.... km/h'        : '#e6441f',    # dark red
+    }
+
+    def wind_color_aggregation(speed):
+        if speed < min_wind:
+            return wind_colors_and_range[f'0 - {min_wind}km/h' ]    
+        elif speed > max_wind:
+            return wind_colors_and_range[f'{max_wind} +.... km/h']
+        elif speed >= min_wind and speed <= max_wind:
+            return wind_colors_and_range[f'{min_wind} - {max_wind}km/h']
+
+    wind_bar_colors = data['windspeed'].apply(wind_color_aggregation)
+
+
     # Wind and wind gusts
     ax_left_up = ax[0]
-    wind = ax_left_up.bar(data.index, data['windspeed'], width=0.04, color='green', label='Prędkość wiatru')
+    wind = ax_left_up.bar(data.index, data['windspeed'], width=0.04, color=wind_bar_colors, label='Prędkość wiatru')
     gust = ax_left_up.scatter(data.index, data['windgust'], c='steelblue', marker='_', s=100, label='Porywy wiatru')
 
     ax_left_up.set_title(f'Prognoza na następne 48h dla {data["name"].iloc[0]}')
@@ -88,15 +112,21 @@ def main():
     ax[0].grid(which='minor', linestyle=':', linewidth='0.5', color='gray')
 
     # Filling color between 'temp' and 'feelslike'
+
+    
     ax_right_up.fill_between(data.index, data['temp'], data['feelslike'], 
-                            where=(data['temp'] != data['feelslike']),
-                            color='salmon', alpha=0.2)
+                            where=(data['temp'] <= data['feelslike']),
+                            color='#FF0066', alpha=0.2)     ## ruby red color
+    
+    ax_right_up.fill_between(data.index, data['temp'], data['feelslike'], 
+                            where=(data['temp'] >= data['feelslike']),
+                            color='#00FFFF', alpha=0.2)     ## aqua color
 
     # Arrows pointing wind direction
     arrow_length = 1.5
     arrow_y = data['temp'].mean()
     for i in range(len(data)):
-        wind_dir_rad = np.deg2rad(data['winddir'].iloc[i])  
+        wind_dir_rad = np.deg2rad(270 - data['winddir'].iloc[i])  
         x = data.index[i] 
        
         dx = arrow_length * np.cos(wind_dir_rad)  
@@ -105,7 +135,7 @@ def main():
         dx_timedelta = pd.Timedelta(hours=dx)
         
         ax_right_up.annotate('', xy=(x + dx_timedelta, arrow_y + dy), xytext=(x, arrow_y),
-                            arrowprops=dict(arrowstyle='->', color='red', lw=1.5))
+                            arrowprops=dict(arrowstyle='<-', color='red', lw=1.5))
 
     # Lower Graph
     ax_left_dwn = ax[1]
@@ -139,7 +169,12 @@ def main():
     arrow_legend = Line2D([0], [0], color='red', lw=0.5, marker='>', markersize=5, label='Kierunek wiatru')
 
     # Legends
-    ax[0].legend(handles=(wind, gust, arrow_legend), loc='upper left')
+    
+    #wind legend
+    wind_legend_elements = [Patch(facecolor=color, label=range_) for range_, color in wind_colors_and_range.items()]
+
+
+    ax[0].legend(handles=(*wind_legend_elements, gust, arrow_legend), loc='upper left')
     ax_right_up.legend(loc='upper right')
     ax_left_dwn.legend(loc='upper left')
     ax_right_dwn.legend(loc='upper right')
@@ -152,6 +187,7 @@ if __name__ == '__main__':
 
     main()
     plt.show()
+    # plt.savefig('weather_plot.png')
 
 else:
     main()

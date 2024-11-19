@@ -1,11 +1,19 @@
-name: Run Program Periodically
+name: Run Program Periodically and Deploy to GitHub Pages
 
 on:
-  # schedule:
-  #   - cron: '*/15 6-18 * * *'  # Runs every 15 minutes between 08:00 and 20:59 (UTC+2)
-  #   - cron: '*/20 19-20 * * *' # Runs every 15 minutes between 21:00 and 22:59 (UTC+2)
+  schedule:
+    - cron: '5 6 * * *'  # Runs at 06:05 (UTC) -> 08:05 (Polish time)
+    - cron: '5 12 * * *' # Runs at 12:05 (UTC) -> 14:05 (Polish time)
+    - cron: '5 18 * * *' # Runs at 18:05 (UTC) -> 20:05 (Polish time)
+    - cron: '5 20 * * *' # Runs at 19:05 (UTC) -> 22:05 (Polish time)
 
   workflow_dispatch: # Allows manual triggering
+
+permissions:
+  actions: read
+  contents: write  # Added write permissions
+  pages: write      # Write permissions to GitHub Pages
+  id-token: write   # Allows token authorization 
 
 jobs:
   build:
@@ -25,6 +33,29 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    # Step to install GitHub CLI
+    - name: Install GitHub CLI
+      run: |
+        sudo apt-get update
+        sudo apt-get install gh
+
+    - name: Create temp directory for artifact
+      run: mkdir -p temp_dir
+
+    - name: Download last email artifact
+      run: gh run download --name last_email_date --dir temp_dir
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Move last_email_date.txt to root
+      run: mv temp_dir/last_email_date.txt .
+
+    - name: Create last_email_date.txt if not exists
+      run: |
+        if [ ! -f last_email_date.txt ]; then
+          echo "1970-01-01" > last_email_date.txt
+        fi
+
     - name: Set environment variables
       run: |
         echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> $GITHUB_ENV
@@ -40,3 +71,51 @@ jobs:
 
     - name: Run script
       run: python app.py
+
+    - name: Log Data Update
+      run: cat ./data_weather/data_update_log.txt
+
+    - name: Configure Git
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+
+    - name: Commit changes
+      run: |
+        git add .
+        git commit -m "Update weather data and plot"
+      continue-on-error: true  # This ensures the step runs even if no changes were made
+
+    - name: Push changes
+      run: git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload last email date artifact
+      if: always()  # Ensures the step runs even if previous steps fail
+      uses: actions/upload-artifact@v4
+      with:
+        name: last_email_date
+        path: last_email_date.txt
+
+    - name: Display index.html before sed
+      run: cat ./website/index.html
+
+    - name: Log current timestamp
+      run: |
+        echo "Current timestamp: $(date +%s)"
+
+    - name: Update image URL with a timestamp
+      run: |           
+        sed -i "s/src=\"weather_plot2.png[^\"]*\"/src=\"weather_plot2.png?time=$(date +%s)\"/" ./website/index.html
+
+    - name: Display index.html after sed
+      run: cat ./website/index.html
+
+    # Deploy to GitHub Pages
+    - name: Deploy to GitHub Pages
+      if: always()  # Deploy even if previous steps fail
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}  # Default GitHub Actions Token
+        publish_dir: ./website

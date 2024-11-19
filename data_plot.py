@@ -1,3 +1,4 @@
+import os
 from typing import Any
 import locale
 import matplotlib.pyplot as plt
@@ -47,16 +48,20 @@ def get_data(hours: int) -> pd.DataFrame:
                         )
 
     data['name'] = data['name'].apply(modify_loc)
-
     data = data.iloc[12:hours+12]
     return data
+
 
 def main():
 
     data = get_data(56)
 
-    locale.setlocale(locale.LC_TIME, 'polish')
-  
+    # Try setting locale to Polish, fallback to English if it fails
+    try:
+        locale.setlocale(locale.LC_TIME, 'polish')
+    except locale.Error:
+        locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')  # Fallback to English locale
+
     fig, ax = plt.subplots(2, 1, figsize=(15,6), layout='constrained')
     sns.set_style("whitegrid")
 
@@ -123,7 +128,7 @@ def main():
                             color='#00FFFF', alpha=0.2)     ## aqua color
 
     # Arrows pointing wind direction
-    arrow_length = 1.5
+    arrow_length = 1.0
     arrow_y = data['temp'].mean()
     for i in range(len(data)):
         wind_dir_rad = np.deg2rad(270 - data['winddir'].iloc[i])  
@@ -160,11 +165,9 @@ def main():
     ax_left_dwn.xaxis.set_minor_formatter(mdates.DateFormatter('%d-%B'))  
     ax_left_dwn.xaxis.set_minor_locator(mdates.HourLocator(byhour=12))
     ax_left_dwn.tick_params(axis='x', which='minor', pad=30, labelsize='large')  
-
     # Grid
     ax_left_dwn.grid(which='major', linestyle='-', linewidth='0.5', color='blue')
     ax_right_dwn.grid(which='minor', linestyle=':', linewidth='0.5', color='orange')
-
     # Created 'Wind Direction Marker' 
     arrow_legend = Line2D([0], [0], color='red', lw=0.5, marker='>', markersize=5, label='Kierunek wiatru')
 
@@ -181,7 +184,13 @@ def main():
 
     night_hours(data, ax[0], ax[1])
 
-    return plt
+    output_file = os.path.join(os.getcwd(), 'weather_plot.png')
+    
+    try:
+        plt.savefig(output_file)
+        print(f'Plot saved successfully as {output_file}')
+    except Exception as e:
+        print(f'Error saving plot: {e}')
 
 if __name__ == '__main__':
 
@@ -192,4 +201,4 @@ if __name__ == '__main__':
 else:
     main()
     plt.savefig('weather_plot.png')
-    
+    plt.savefig(os.path.join('website', 'weather_plot2.png'))

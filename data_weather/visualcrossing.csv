@@ -12,13 +12,13 @@ name,datetime,temp,feelslike,dew,humidity,precip,precipprob,preciptype,snow,snow
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T10:00:00,1.6,-2.7,0.2,90.75,0.6,100,snow,0.1,1.4,32.4,16.2,234,993.6,88,10,33,0.1,0,10,"Snow, Partially cloudy",snow,"EPKT,LKMT,EPKK,F8705"
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T11:00:00,1.6,-3.2,0.2,90.75,0.5,100,"rain,snow",0,1.3,27.4,19.5,238,994.3,95.8,10,64,0.2,1,10,"Snow, Rain, Overcast",rain,"EPKT,LKMT,EPKK,F8705"
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T12:00:00,1.9,-2.4,-0.5,83.87,0.1,100,"rain,snow",0,1.2,36.4,17.8,257,994.6,91.4,9.7,68,0.2,1,10,"Snow, Rain, Overcast",rain,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T13:00:00,1.9,-2.7,-0.5,84.01,0,0,,0,1.2,39.2,19.4,241,994.9,88,10,29,0.1,0,10,Partially cloudy,partly-cloudy-day,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T14:00:00,3.3,-0.4,-2.2,67.22,0,3.2,,0,1.1,31,14.8,295.3,997,100,24.1,79,0.3,1,10,Overcast,cloudy,
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T15:00:00,3.2,0.3,-1.8,69.72,0,3.2,,0,1.1,30.2,10.8,277.4,997,100,24.1,72,0.3,1,10,Overcast,cloudy,
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T16:00:00,2.6,-0.4,-1.6,73.82,0,3.2,,0,1.1,23.8,10.4,280.5,998,50.2,24.1,18,0.1,0,10,Partially cloudy,partly-cloudy-night,
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T17:00:00,1.8,-0.7,-1.1,81.08,0,3.2,,0,1,21.2,8.3,256.6,999,51.1,24.1,0,0,0,10,Partially cloudy,partly-cloudy-night,
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T18:00:00,1.2,-1.5,-1,85.26,0,3.2,,0,1,16.6,8.3,236.3,999,56.2,24.1,0,0,0,10,Partially cloudy,partly-cloudy-night,
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T19:00:00,0.8,-2.8,-2.2,80.34,0,3.2,,0,1,23,11.5,236.8,999,28.7,24.1,0,0,0,10,Partially cloudy,partly-cloudy-night,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T13:00:00,1.9,-2.7,-0.5,84.01,0,0,,0,1.2,39.2,19.4,241,994.9,88,10,25,0.1,0,10,Partially cloudy,partly-cloudy-day,"EPKT,LKMT,EPKK,F8705"
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T14:00:00,1.9,-3.3,-1,81.58,0,0,,0,1.1,31,23.4,262,995.6,77.4,10,42,0.2,0,10,Partially cloudy,partly-cloudy-day,"EPKT,LKMT,EPKK,F8705"
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T15:00:00,1.5,-3.3,-1.3,81.52,0,0,,0,1.1,30.2,19.6,277,996.9,88,7.4,31,0.1,0,10,Partially cloudy,partly-cloudy-day,"EPKT,LKMT,EPKK,F8705"
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T16:00:00,1,-3.2,-1.7,82.59,0,0,,0,1.1,23.8,14.6,242,996.6,57.1,10,5,0,0,10,Partially cloudy,partly-cloudy-night,"EPKT,LKMT,EPKK,F8705"
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T17:00:00,0.6,-3.6,-1.7,84.28,0,0,,0,1,21.2,14.8,250,996.9,57.1,10,0,0,0,10,Partially cloudy,partly-cloudy-night,"EPKT,LKMT,EPKK,F8705"
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T18:00:00,0.3,-3.6,-2.7,80.27,0,0,,0,1,16.6,12.6,228,997.3,25,10,0,0,0,10,Partially cloudy,partly-cloudy-night,"EPKT,LKMT,EPKK,F8705"
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T19:00:00,0.2,-3.9,-2.7,80.8,0,0,,0,1,23,13.8,203,997.3,28.7,10,0,0,0,10,Partially cloudy,partly-cloudy-night,"EPKT,LKMT,EPKK,F8705"
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T20:00:00,0.6,-3.2,-2.9,77.39,0,9.7,,0,1,25.2,12.2,233.3,999,0,24.1,0,0,0,10,Clear,clear-night,
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T21:00:00,0.6,-3.3,-3.1,76.24,0,9.7,,0,1,25.9,13,232.6,999,0.4,24.1,0,0,0,10,Clear,clear-night,
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2024-11-20T22:00:00,0.6,-3.7,-2.6,79.13,0,9.7,,0,1,31,15.1,237,1000,8.7,24.1,0,0,0,10,Clear,clear-night,

@@ -131,7 +131,7 @@ def main():
     arrow_length = 1.0
     arrow_y = data['temp'].mean()
     for i in range(len(data)):
-        wind_dir_rad = np.deg2rad(270 - data['winddir'].iloc[i])  
+        wind_dir_rad = np.deg2rad(90 - data['winddir'].iloc[i])  
         x = data.index[i] 
        
         dx = arrow_length * np.cos(wind_dir_rad)  

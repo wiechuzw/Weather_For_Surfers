@@ -1,5 +1,5 @@
 """
-Tests of the `load_weather_data` function from the `data_loading` module.
+Tests of the `download_weather_data` function from the `data_loading` module.
 
 The test class contains tests that check the correct operation of the `load_weather_data` function and error handling.
 The tests are run in a temporary test directory.

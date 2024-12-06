@@ -1,5 +1,5 @@
 """
-Negative tests for the `load_weather_data` function in the `data_loading` module.
+Negative tests for the `download_weather_data` function in the `data_loading` module.
 
 These tests check how the function handles various types of errors,
 that can occur during data retrieval, file saving, and directory creation.

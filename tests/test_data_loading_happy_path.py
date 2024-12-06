@@ -1,5 +1,5 @@
 """
-Tests of the `load_weather_data` function from the `data_loading` module.
+Tests of the `download_weather_data` function from the `data_loading` module.
 
 The test class contains tests that check the correct operation of the `load_weather_data` function and error handling.
 The tests are run in a temporary test directory.
@@ -53,7 +53,7 @@ class TestDataLoading(unittest.TestCase):
         mock_get.return_value = mock_response
 
         """Starting the function"""
-        data_loading.load_weather_data()
+        data_loading.download_weather_data()
 
         """Checking if the file was opened in write mode"""
         mock_file.assert_any_call(data_loading.OUTPUT_FILENAME, 'w', encoding='utf-8')
@@ -65,7 +65,7 @@ class TestDataLoading(unittest.TestCase):
     @patch('data_loading.requests.get', side_effect=requests.RequestException("Error"))
     def test_program_exit_on_error(self, mock_get, mock_exit):
         """Test of program termination in case of error"""
-        data_loading.load_weather_data()
+        data_loading.download_weather_data()
         
         """Checking if the program exited with code 1"""
         mock_exit.assert_called_with(1)

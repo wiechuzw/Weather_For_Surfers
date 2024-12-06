@@ -1,5 +1,5 @@
 """
-Negative tests for the `load_weather_data` function in the `data_loading` module.
+Negative tests for the `download_weather_data` function in the `data_loading` module.
 
 These tests check how the function handles various types of errors,
 that can occur during data retrieval, file saving, and directory creation.
@@ -66,19 +66,19 @@ class TestDataLoadingNegativePath(unittest.TestCase):
     @patch('os.makedirs', side_effect=Exception("Directory creation error"))
     def test_error_during_directory_creation(self, mock_makedirs):
         """Test if sys.exit is called when directory creation fails"""
-        data_loading.load_weather_data()
+        data_loading.download_weather_data()
         self.mock_exit.assert_called_with(1)
 
     @patch('builtins.open', side_effect=Exception("File write error"))
     def test_error_during_data_saving(self, mock_open):
         """Test if sys.exit is called when file write fails"""
-        data_loading.load_weather_data()
+        data_loading.download_weather_data()
         self.mock_exit.assert_called_with(1)
 
     @patch('requests.get', side_effect=requests.RequestException("Network Error"))
     def test_error_during_data_retrieval(self, mock_get):
         """Test if sys.exit is called when the data retrieval fails"""
-        data_loading.load_weather_data()
+        data_loading.download_weather_data()
         self.mock_exit.assert_called_with(1)
 
 if __name__ == '__main__':

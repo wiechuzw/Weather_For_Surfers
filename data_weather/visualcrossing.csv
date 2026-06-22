@@ -1,28 +1,4 @@
 name,datetime,temp,feelslike,dew,humidity,precip,precipprob,preciptype,snow,snowdepth,windgust,windspeed,winddir,sealevelpressure,cloudcover,visibility,solarradiation,solarenergy,uvindex,severerisk,conditions,icon,stations
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T00:00:00,18.8,18.8,17.8,93.92,0.1,0,rain,0,0,1.8,5.7,280,1024.7,25,10,0,0,0,10,Partially cloudy,partly-cloudy-night,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T01:00:00,18.2,18.2,17.6,95.99,0.3,100,rain,0,0,4,3,290,1024.7,25,10,0,0,0,0,"Rain, Partially cloudy",rain,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T02:00:00,17.2,17.2,16.8,97.81,0,0,,0,0,3.2,4.1,268,1024.3,25,8.5,0,0,0,3,Partially cloudy,partly-cloudy-night,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T03:00:00,17.1,17.1,16.8,98.24,0,0,,0,0,3.2,2.8,55,1023.7,5.1,7.8,0,0,0,0,Clear,clear-night,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T04:00:00,17.4,17.4,16.1,92.2,0.1,0,rain,0,0,7.6,5.4,312,1023.7,25,7.1,0,0,0,0,Partially cloudy,partly-cloudy-night,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T05:00:00,17.9,17.9,17.2,95.98,0,0,,0,0,10.4,4.7,163,1024.3,50,8.2,3,0,0,0,Partially cloudy,partly-cloudy-day,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T06:00:00,18.6,18.6,17.6,93.91,0.3,100,rain,0,0,9.7,10.8,301,1024.3,36.1,9.3,25,0.1,0,0,"Rain, Partially cloudy",rain,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T07:00:00,20,20,18.3,90.22,1.4,100,rain,0,0,11.9,9.5,322,1024.3,50,9.7,46,0.2,0,10,"Rain, Partially cloudy",rain,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T08:00:00,20.3,20.3,18.3,88.3,0.1,0,rain,0,0,7.6,9.7,251,1024.3,41.3,10,112,0.4,1,10,Partially cloudy,partly-cloudy-day,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T09:00:00,21.4,21.4,19,86.48,0,0,,0,0,10.8,10.3,306,1024.7,34.3,10,117,0.4,1,10,Partially cloudy,partly-cloudy-day,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T10:00:00,22.7,22.7,18.9,79.1,0.1,0,rain,0,0,13.7,11.6,276,1023.9,25,10,118,0.4,1,10,Partially cloudy,partly-cloudy-day,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T11:00:00,22.9,22.9,19.6,81.43,0,0,,0,0,11.9,13.2,305,1024.3,64.6,8.6,170,0.6,2,10,Partially cloudy,partly-cloudy-day,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T12:00:00,23.3,23.3,18.9,76.58,1.1,100,rain,0,0,10.4,10.6,50,1024,54,10,108,0.4,1,10,"Rain, Partially cloudy",rain,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T13:00:00,24.3,24.3,19,72.52,1.4,100,rain,0,0,10.1,9.7,347,1023.7,64.6,7.9,268,1,3,30,"Rain, Partially cloudy",rain,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T14:00:00,23.8,23.8,17.6,68.31,1.3,100,rain,0,0,10.4,14.8,311,1023,40.7,10,628,2.3,6,10,"Rain, Partially cloudy",rain,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T15:00:00,24.1,24.1,17.9,68.18,0,0,,0,0,10.8,16.1,310,1023,40.7,10,436,1.6,4,10,Partially cloudy,partly-cloudy-day,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T16:00:00,24.8,24.8,17.6,64.33,0.7,100,rain,0,0,9.4,12,316,1022.6,25,10,545,2,5,10,"Rain, Partially cloudy",rain,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T17:00:00,24.5,24.5,18.6,69.66,1.1,100,rain,0,0,13,13.3,6,1022.3,32,10,205,0.7,2,30,"Rain, Partially cloudy",rain,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T18:00:00,24.5,24.5,18.3,68.36,0.8,100,rain,0,0,13,11.3,293,1022,25,10,332,1.2,3,30,"Rain, Partially cloudy",rain,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T19:00:00,24.2,24.2,17.5,66.34,0.8,100,rain,0,0,12.6,15.3,318,1022,25,10,283,1,3,30,"Rain, Partially cloudy",rain,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T20:00:00,23.9,23.9,17.2,66.09,1.1,100,rain,0,0,16.9,9.1,339,1022,50,10,134,0.5,1,10,"Rain, Partially cloudy",rain,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T21:00:00,21.5,21.5,16.5,73.22,0.4,100,rain,0,0,5.4,6.7,339,1022,5,10,31,0.1,0,10,Rain,rain,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T22:00:00,19.5,19.5,15.9,79.68,0.2,0,rain,0,0,5,6.8,307,1022.7,8.7,10,0,0,0,0,Clear,clear-night,"EPKT,LKMT,EPKK,F8705"
-"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-22T23:00:00,18.2,18.2,16.7,90.96,0,26,,0,0,7.2,5,2,1023,16.8,24.1,0,0,0,0,Clear,clear-night,
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-23T00:00:00,17.7,17.7,16.3,91.51,0,26,,0,0,8.6,6.5,1.4,1023,43.7,24.1,0,0,0,0,Partially cloudy,partly-cloudy-night,
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-23T01:00:00,17.4,17.4,15.8,90.33,0,26,,0,0,5.8,5.4,25,1023,20.8,24.1,0,0,0,0,Partially cloudy,partly-cloudy-night,
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-06-23T02:00:00,16.6,16.6,14.9,89.69,0,26,,0,0,3.2,3.2,4.1,1022,100,24.1,0,0,0,0,Overcast,cloudy,
@@ -359,3 +335,27 @@ name,datetime,temp,feelslike,dew,humidity,precip,precipprob,preciptype,snow,snow
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-06T21:00:00,24.7,24.7,17.3,63.59,0,13,,0,0,4.4,3,235.2,1013.3,1.7,24.1,163.3,0.6,0,10,Clear,clear-night,
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-06T22:00:00,23.3,23.3,17.1,68.02,0,13,,0,0,5.6,4.6,199.9,1013.7,3.3,24.1,81.7,0.3,0,10,Clear,clear-night,
 "Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-06T23:00:00,22,22,16.9,72.82,0,13,,0,0,6.8,6.1,164.6,1014,5,24.1,0,0,0,10,Clear,clear-night,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T00:00:00,21.5,21.5,16.5,73.5,0,13,,0,0,6.5,6,176.9,1014,3.3,24.1,0,0,0,10,Clear,clear-night,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T01:00:00,21,21,16.2,74.2,0,13,,0,0,6.1,5.9,189.3,1014,1.7,24.1,0,0,0,0,Clear,clear-night,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T02:00:00,20.5,20.5,15.9,74.91,0,13,,0,0,5.8,5.8,201.6,1014,0,24.1,0,0,0,0,Clear,clear-night,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T03:00:00,20.1,20.1,15.7,75.65,0,3,,0,0,5,5,173.7,1014,0.1,24.1,0,0,0,0,Clear,clear-night,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T04:00:00,19.7,19.7,15.4,76.41,0,3,,0,0,4.3,4.3,145.8,1014,0.3,24.1,0,0,0,0,Clear,clear-night,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T05:00:00,19.4,19.4,15.3,77.17,0,3,,0,0,3.6,3.6,117.9,1014,0.4,24.1,0,0,0,0,Clear,clear-day,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T06:00:00,21.1,21.1,15.8,71.44,0,3,,0,0,5.8,4.9,115,1014,0.3,24.1,61.7,0.2,1,0,Clear,clear-day,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T07:00:00,22.9,22.9,16.3,66.23,0,3,,0,0,7.9,6.2,112.2,1014,0.1,24.1,123.3,0.5,1,0,Clear,clear-day,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T08:00:00,24.7,24.7,16.8,61.47,0,3,,0,0,10.1,7.6,109.3,1014,0,24.1,185,0.7,2,0,Clear,clear-day,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T09:00:00,26.5,26.5,16.5,54.32,0,7,,0,0,9.8,8,113.4,1013.7,1.7,24.1,331.3,1.2,3,10,Clear,clear-day,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T10:00:00,28.3,28.6,16.3,48.07,0,7,,0,0,9.6,8.5,117.4,1013.3,3.3,24.1,477.7,1.7,5,10,Clear,clear-day,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T11:00:00,30.2,30.2,16.1,42.6,0,7,,0,0,9.4,9,121.5,1013,5,24.1,624,2.2,6,10,Clear,clear-day,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T12:00:00,31.1,30.9,15.6,39.21,0,7,,0,0,10,7.6,118.3,1012.7,4.7,24.1,700.7,2.5,7,10,Clear,clear-day,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T13:00:00,32.1,31.7,15.2,36.1,0,7,,0,0,10.6,6.1,115.2,1012.3,4.4,24.1,777.3,2.8,8,10,Clear,clear-day,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T14:00:00,33.1,32.6,14.8,33.24,0,7,,0,0,11.2,4.7,112,1012,4.1,24.1,854,3.1,9,10,Clear,clear-day,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T15:00:00,33,32.7,15.2,34.17,0,16,,0,0,10.1,6.2,112.8,1011.3,2.7,24.1,802.3,2.9,8,10,Clear,clear-day,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T16:00:00,33,32.8,15.6,35.13,0,16,,0,0,9,7.8,113.7,1010.7,1.4,24.1,750.7,2.7,8,10,Clear,clear-day,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T17:00:00,33,32.9,16,36.1,0,16,,0,0,7.9,9.4,114.5,1010,0,24.1,699,2.5,7,30,Clear,clear-day,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T18:00:00,31.1,31.5,17,42.85,0,16,,0,0,13.3,10.4,112.1,1010,1.3,24.1,557.7,2,6,30,Clear,clear-day,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T19:00:00,29.2,30.1,18,50.92,0,16,,0,0,18.7,11.5,109.6,1010,2.6,24.1,416.3,1.5,4,30,Clear,clear-day,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T20:00:00,27.4,28.6,19.1,60.55,0,16,,0,0,24.1,12.6,107.2,1010,3.9,24.1,275,1,3,30,Clear,clear-day,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T21:00:00,26.3,26.3,18.3,61.57,0,16,,0,0,20.6,11.6,114.2,1010,11.5,24.1,183.3,0.7,0,8,Clear,clear-night,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T22:00:00,25.2,25.2,17.5,62.63,0,16,,0,0,17.2,10.7,121.3,1010,19.1,24.1,91.7,0.3,0,8,Clear,clear-night,
+"Goczałkowice-Zdrój, Woj. Śląskie, Polska",2026-07-07T23:00:00,24.1,24.1,16.8,63.72,0,16,,0,0,13.7,9.7,128.3,1010,26.7,24.1,0,0,0,3,Partially cloudy,partly-cloudy-night,
